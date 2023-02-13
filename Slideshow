@@ -1,0 +1,116 @@
+
+class Slideshow {
+        
+    #container = null
+    #children = null; 
+    #startingSlide = 0; 
+    #fadeDuration = 35;
+    #slidePauseDuration = 5000;
+
+    get Container(){
+        return this.#container;
+    } 
+
+    set Container(v){
+        this.#container = v; 
+    }
+
+    get Children() {
+        return this.#children; 
+    }
+
+    set Children(v){
+        this.#children = v; 
+    }
+
+    get StartingSlide(){
+        return this.#startingSlide;
+    }
+
+    set StartingSlide(v) {
+        this.#startingSlide = ((v > -1) && (v < this.#children.length)) ? v : 0;
+    }
+
+    get FadeDuration() {
+        return this.#fadeDuration; 
+    }
+
+    set FadeDuration(v){
+        this.#fadeDuration = v;
+    }
+
+    get SlidePauseDuration(){
+        return this.#slidePauseDuration;
+    }
+
+    set SlidePauseDuration(v){
+        this.#slidePauseDuration = v; 
+    }
+
+   
+    constructor(id){
+        let el = document.getElementById(id); 
+        if (!el) alert("Provided ID doesn't exist");
+        this.#container = el; 
+        this.#children = el.children; 
+    }
+
+
+    
+    Start(){        
+        this.FadeIn(this, 0, this.#startingSlide, this.#children, this.#slidePauseDuration);
+    }
+
+    FadeIn(slideshow, i, j, slides, pauseDuration){
+                
+        var opacity = i / 100; 
+        var slide = slides[j];
+        var duration = slideshow.#fadeDuration;
+
+        if (i >= 100){           
+            
+            window.setTimeout(function(){
+                slideshow.FadeOut(slideshow, i, j, slides, pauseDuration);                            
+                return;        
+            }, pauseDuration);
+            return ;
+        }
+        
+        slide.classList.add("show");
+        slide.style.opacity = opacity;
+        
+        window.setTimeout(function(){
+            
+            i++;
+            slideshow.FadeIn(slideshow, i, j, slides, pauseDuration); 
+
+        }, duration);
+
+
+    }
+    
+    FadeOut(slideshow, i, j, slides, pauseDuration){
+                
+        var opacity = i / 100; 
+        var slide = slides[j];
+        var duration = slideshow.#fadeDuration;
+
+        if (i <= 0) 
+        {        
+            slide.classList.remove("show");            
+            j++;
+            j = slides.length > j ? j : 0; 
+            slideshow.FadeIn(slideshow, i, j, slides, pauseDuration);  
+            return;                   
+        }
+        
+        slide.style.opacity = opacity;
+        
+        window.setTimeout(function(){                
+            i--;
+            slideshow.FadeOut(slideshow, i, j, slides, pauseDuration); 
+        }, duration);
+
+    }
+
+}
