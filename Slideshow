@@ -1,6 +1,6 @@
 
-class Slideshow {
-        
+class Slideshow 
+{       
     #container = null
     #children = null; 
     #startingSlide = 0; 
@@ -50,12 +50,25 @@ class Slideshow {
    
     constructor(id){
         let el = document.getElementById(id); 
-        if (!el) alert("Provided ID doesn't exist");
+        if (!el) {
+            console.log("Provided ID doesn't exist.");
+            console.log("Creating div");
+            el = document.createElement("div"); 
+            el.id = id;             
+        }
+        
         this.#container = el; 
         this.#children = el.children; 
     }
 
-
+    /**
+     * 
+     * @param {Slide} slide 
+     */
+    AddSlide(slide){        
+        this.Container.appendChild(slide.Container); 
+        slide.Container.style.backgroundImage = "url(" + slide.ImageUrl + ");";
+    }
     
     Start(){        
         this.FadeIn(this, 0, this.#startingSlide, this.#children, this.#slidePauseDuration);
@@ -110,7 +123,52 @@ class Slideshow {
             i--;
             slideshow.FadeOut(slideshow, i, j, slides, pauseDuration); 
         }, duration);
+    }
+}
 
+class Slide {
+
+    #container = null;
+    #imageUrl = ""; 
+    #textContent = "";
+    #cssClass = "";    
+
+    get Container() { return this.#container; }
+    set Container(v) { this.#container = v; }
+    get ImageUrl() { return this.#imageUrl; }
+    set ImageUrl(v) { this.#imageUrl = v; }
+    get TextContent() { return this.#textContent; }
+    set TextContent(v) { this.#textContent = v; }
+    get CssClass() { return this.#cssClass; }
+    set CssClass(v) { this.#cssClass = v; }
+
+    constructor(url, content, css) {        
+        
+        let slide = document.createElement("div"); 
+
+        if (content) {
+            this.#textContent = content; 
+            let span = document.createElement("span"); 
+            span.innerHTML = content; 
+            slide.appendChild(span); 
+        }  
+                 
+        if (css) {
+            this.#cssClass = css; 
+            slide.classList.add(css); 
+        }     
+        
+        if (url) { 
+            this.ImageUrl = url;                         
+            slide.style.backgroundImage = 'url(' + url + ');'; 
+            console.log(slide); 
+            console.log(slide.style);             
+        }
+
+        this.#container = slide; 
+        
     }
 
+
+    
 }
