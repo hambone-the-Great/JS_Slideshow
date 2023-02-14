@@ -4,7 +4,7 @@ class Slideshow
     #container = null
     #children = null; 
     #startingSlide = 0; 
-    #fadeDuration = 35;
+    #fadeDuration = 15;
     #slidePauseDuration = 5000;
 
     get Container(){
@@ -50,11 +50,10 @@ class Slideshow
    
     constructor(id){
         let el = document.getElementById(id); 
-        if (!el) {
-            console.log("Provided ID doesn't exist.");
-            console.log("Creating div");
+        if (!el) {            
             el = document.createElement("div"); 
-            el.id = id;             
+            el.id = id;     
+            document.appendChild(div);         
         }
         
         this.#container = el; 
@@ -66,8 +65,12 @@ class Slideshow
      * @param {Slide} slide 
      */
     AddSlide(slide){        
-        this.Container.appendChild(slide.Container); 
-        slide.Container.style.backgroundImage = "url(" + slide.ImageUrl + ");";
+        this.Container.appendChild(slide.Container);      
+        slide.Container.setAttribute("style", 
+            "background-image:url('" + slide.ImageUrl + "'); " + 
+            "background-position:" + slide.ImagePosition + ";" + 
+            "background-size:" + slide.ImageSize + ";"
+        );
     }
     
     Start(){        
@@ -131,7 +134,9 @@ class Slide {
     #container = null;
     #imageUrl = ""; 
     #textContent = "";
-    #cssClass = "";    
+    #cssClass = "slide";    
+    #imagePosition = "center center"; 
+    #imageSize = "cover"; 
 
     get Container() { return this.#container; }
     set Container(v) { this.#container = v; }
@@ -141,8 +146,12 @@ class Slide {
     set TextContent(v) { this.#textContent = v; }
     get CssClass() { return this.#cssClass; }
     set CssClass(v) { this.#cssClass = v; }
+    get ImagePosition() { return this.#imagePosition; }
+    set ImagePosition(v) { this.#imagePosition = v; }
+    get ImageSize() { return this.#imageSize; }
+    set ImageSize(v) { this.#imageSize = v; } 
 
-    constructor(url, content, css) {        
+    constructor(url, content, css, pos, size) {        
         
         let slide = document.createElement("div"); 
 
@@ -152,23 +161,32 @@ class Slide {
             span.innerHTML = content; 
             slide.appendChild(span); 
         }  
-                 
-        if (css) {
+
+        if (pos) {
+            this.#imagePosition = pos;            
+        }
+
+        if (size) {
+            this.#imageSize = size; 
+        }
+
+        if (css) {            
+                        
             this.#cssClass = css; 
-            slide.classList.add(css); 
+
+            let classes = css.split(' '); 
+
+            for (var key in classes)
+            {
+                slide.classList.add(classes[key]);     
+            }
         }     
         
         if (url) { 
-            this.ImageUrl = url;                         
-            slide.style.backgroundImage = 'url(' + url + ');'; 
-            console.log(slide); 
-            console.log(slide.style);             
+            this.ImageUrl = url;                                     
         }
 
-        this.#container = slide; 
-        
+        this.#container = slide;         
     }
-
-
     
 }
