@@ -430,19 +430,24 @@ class Slide
     FadeOut(_opacity) 
     {
         var me = this; 
+                     
+        me.Element.style.display = "block";
         
-        console.log(me);         
+        if (_opacity <= 0) 
+        {
+            me.Element.style.display = "none";
+            return; 
+        }
         
-        if (_opacity <= 0) return; 
-
-        _opacity--; 
-
+        _opacity = _opacity - 10;  
+        
         me.Element.style.opacity = _opacity; 
 
         window.setTimeout(function(){
             me.FadeOut(_opacity); 
             return;
         }, 25); 
+
         return;
     }
 
