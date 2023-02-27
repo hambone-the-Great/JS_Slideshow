@@ -134,7 +134,16 @@ class Slideshow
             document.appendChild(div);         
         }        
         this.#container = el; 
-        this.#slideElements = el.children;                                 
+        this.#slideElements = el.children;  
+        
+        for (let i = 0; i < this.#slideElements.length; i++) 
+        {
+            let slide = new Slide(); 
+            slide.Element = this.#slideElements[i]; 
+            this.#SlideCollection.push(slide);             
+        }
+
+        
     }
 
     /**
@@ -354,7 +363,7 @@ class Slide
 
     /**
      * The Slide Constructor FUNction! 
-     * @param {String} src //The Image Url string (optional).
+     * @param {String} src //The background image Url string (optional).
      * @param {String} content //The text content of the slide (optional).
      * @param {String} css //A string containing the desired CSS classes for the slide (separted by a space) (optional).
      * @param {*} pos //The CSS image position of the background image of the slide (optional).
