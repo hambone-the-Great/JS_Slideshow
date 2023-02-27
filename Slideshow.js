@@ -494,7 +494,7 @@ class Slide
 
             for (var key in classes)
             {
-                slide.classList.add(classes[key]);     
+                this.#element.classList.add(classes[key]);
             }
         }     
                 
