@@ -503,7 +503,7 @@ class Slide
         }
 
         if (href) {
-            slide.addEventListener("click", function(){
+            this.#element.addEventListener("click", function(){
                 window.location = href; 
             }); 
         }        
