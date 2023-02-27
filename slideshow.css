@@ -20,16 +20,15 @@
     text-align: center;
     width:auto;
     height:var(--slideshow-height);
-    white-space:wrap;
+    white-space:normal;
     cursor:pointer;
 }
 
 .slideshow .slide > * {
     font-size:var(--slideshow-fontsize);
-    color:#fff;
+    color:#000;
     margin:0;
-    padding:0;
-    text-shadow:#333 2px 2px 3px;
+    padding:0;    
 }
 
 .slideshow .show {
@@ -74,30 +73,6 @@
 
 .slideshow .whitebg {
     background-color: #fff !important;
-}
-
-#testimonials.slideshow {
-    width:90%;
-    height:300px;
-    background-color:#fff;
-}
-
-#testimonials .slide {
-    width:100%;
-}
-
-#testimonials .slide > h2 {
-    font-size:1.5em;
-    text-align: left;
-    text-shadow: none;
-    margin:1em auto;
-}
-
-#testimonials .slide > p {
-    font-size:1em;
-    color:#000;
-    text-shadow: unset;
-    text-align: left;
 }
 
 .slideshowNavigation {

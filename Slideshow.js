@@ -130,7 +130,8 @@ class Slideshow
         let el = document.getElementById(id); 
         if (!el) {            
             el = document.createElement("div"); 
-            el.id = id;                 
+            el.id = id;
+            el.classList.add("slideshow");
             document.appendChild(div);         
         }        
         this.#container = el; 
@@ -153,12 +154,13 @@ class Slideshow
      */
     AddSlide(slide)
     {        
-        this.Container.appendChild(slide.Element);      
-        slide.Element.setAttribute("style", 
-            "background-image:url('" + slide.ImageUrl + "'); " + 
-            "background-position:" + slide.ImagePosition + ";" + 
-            "background-size:" + slide.ImageSize + ";"
-        );
+        this.Container.appendChild(slide.Element);
+        slide.Element.style.background = "url(" + slide.ImageUrl + ")";
+        slide.Element.style.backgroundRepeat = "no-repeat";
+        slide.Element.style.backgroundPosition = slide.ImagePosition;
+        slide.Element.style.backgroundSize = slide.ImageSize;
+        slide.Element.style.width = slide.Width;
+        slide.Element.style.height = slide.Height; 
         this.#SlideCollection.push(slide); 
     }
 
@@ -328,38 +330,132 @@ class Slideshow
 }
 
 
+
+
+
 /**
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  * The Slide class is used in the Slideshow class. 
- * A slide is a JS object used to create or interact with the top level child element(s) of the slideshow container element. 
+ * 
+ * A slide is a JS object used to create or interact with the top level child element(s) 
+ * of the slideshow container element. 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  */
 class Slide 
 {
 
-    #element = null;
-    #imageUrl = ""; 
+    #element = null;    
+    #textHolder = null;
     #textContent = "";
-    #cssClass = "slide";    
-    #imagePosition = "center center"; 
-    #imageSize = "cover"; 
-    #textHolder = "";
-    #textColor = ""; 
+    #textColor = "#000";
+    #cssClass = "slide";
+    #imageUrl = "";
+    #imagePosition = "center";
+    #imageSize = "cover";     
+    #height = "300px";
+    #width = "800px";
+    #callback = null; 
 
+    /* The Html Element */     
     get Element() { return this.#element; }
     set Element(v) { this.#element = v; }
-    get ImageUrl() { return this.#imageUrl; }
-    set ImageUrl(v) { this.#imageUrl = v; }
-    get TextContent() { return this.#textContent; }
-    set TextContent(v) { this.#textContent = v; }
-    get CssClass() { return this.#cssClass; }
-    set CssClass(v) { this.#cssClass = v; }
+
+    get Height() { return this.#height; }
+    set Height(v)
+    {
+        this.#element.style.height = v;
+        this.#height = v;
+    }
+
+    get Width() { return this.#width; }
+    set Width(v)
+    {
+        this.#element.style.width = v;
+        this.#width = v; 
+    }
+
+    /* The background image of the Slide Element */
+    get ImageUrl()
+    {        
+        return this.#imageUrl;
+    }
+    set ImageUrl(v)
+    {
+        this.#element.style.backgroundImage = v; 
+        this.#imageUrl = v;
+    }
+
+
+    /* The parent element of text in the slide. */
+    get TextHolder()
+    {
+        this.#textHolder = this.#element.getElementsByTagName("span")[0];
+        return this.#textHolder;
+    }
+    //set TextHolder(v)
+    //{
+    //    this.#textHolder = v;
+    //}
+
+    /* The text content of the text holder in the slide */
+    get TextContent()
+    {
+        this.#textContent = this.#textHolder.innerHTML;
+        return this.#textContent;
+    }
+    set TextContent(v)
+    {
+        this.#textHolder.innerHTML = v; 
+        this.#textContent = v;
+    }
+
+    get CssClass()
+    {
+        for (let i = 0; i < this.#element.classList.length; i++)
+        {
+            this.#cssClass += this.#element.classList[i] + " "; 
+        }
+        return this.#cssClass;
+    }
+    set CssClass(v)
+    {
+        let classes = v.split(" ");
+        for (let i = 0; i < classes.length; i++)
+        {
+            let _class = classes[i];
+            this.#element.classList.add(_class);
+        }        
+        this.#cssClass = v;
+    }
+
     get ImagePosition() { return this.#imagePosition; }
-    set ImagePosition(v) { this.#imagePosition = v; }
+    set ImagePosition(v)
+    {
+        this.#element.style.backgroundPosition = v; 
+        this.#imagePosition = v;
+    }
+
     get ImageSize() { return this.#imageSize; }
     set ImageSize(v) { this.#imageSize = v; } 
+
     get TextColor() { return this.#textColor; }
     set TextColor(v){ this.#textColor = v; }
-    get TextHolder(){ return this.#textHolder; }
-    set TextHolder(v) { this.#textHolder = v; }
+
+    get Callback() { return this.#callback; }
+    set Callback(v) { this.#callback = v; }
+
 
     /**
      * The Slide Constructor FUNction! 
@@ -371,20 +467,15 @@ class Slide
      * @param {*} href //The link of the page to navigate to when the slide is clicked (optional). 
      * @param {*} txtColor //The color of the text content of the slide (optional). 
      */
-    constructor(src, content, css, pos, size, href, txtColor) 
-    {        
+    constructor(src, content, css, pos, size, href, txtColor, dimensions)
+    {
         
-        //console.log(this);
+        this.#element = document.createElement("div");        
+        this.#textHolder = document.createElement("span");
 
-        let slide = document.createElement("div"); 
-        let text;
-        
+
         if (content) {
-            this.#textContent = content; 
-            let span = document.createElement("span"); 
-            span.innerHTML = content; 
-            slide.appendChild(span); 
-            text = span; 
+            this.#textContent = content;                                     
         }      
 
         if (pos) {
@@ -415,47 +506,80 @@ class Slide
             slide.addEventListener("click", function(){
                 window.location = href; 
             }); 
-        }
-
-        this.#element = slide;    
+        }        
 
         if (txtColor) {
             this.#textColor = txtColor; 
-            text.style.color = txtColor; 
+            this.#textHolder.style.color = txtColor;
         }
 
+        if (dimensions) {
+            this.Width = dimensions.width;
+            this.Height = dimensions.height;
+        }
+        
+        this.#element.appendChild(this.#textHolder);
     }
 
 
-    FadeOut(_opacity) 
+    #FadeOut(_opacity, callback) 
     {
         var me = this; 
-                     
-        me.Element.style.display = "block";
-        
+                             
         if (_opacity <= 0) 
         {
+            me.Element.style.opacity = 0; 
             me.Element.style.display = "none";
-            return; 
+            if (callback) callback(_opacity);
+            return;
         }
-        
-        _opacity = _opacity - 10;  
-        
-        me.Element.style.opacity = _opacity; 
+
+        me.Element.style.display = "block";
+        _opacity = _opacity - 0.02;
+        me.Element.style.opacity = _opacity;
 
         window.setTimeout(function(){
-            me.FadeOut(_opacity); 
+            me.#FadeOut(_opacity, callback); 
             return;
-        }, 25); 
+        }, 75); 
 
         return;
     }
 
 
-    FadeIn(_opacity)
+    #FadeIn(_opacity, callback)
     {
 
+        var me = this;
+
+        if (_opacity >= 1)
+        {
+            me.Element.style.opacity = 1;
+            if (callback) callback(_opacity);
+            return;
+        }
+
+        me.Element.style.display = "block";
+        _opacity = _opacity + 0.02;
+        me.Element.style.opacity = _opacity;
+
+        window.setTimeout(function () {
+            me.#FadeIn(_opacity, callback);
+            return;
+        }, 75);
+
+        return; 
     }
+
+    FadeOut = (arg) => {
+        this.#FadeOut(1, this.#callback); 
+    }
+
+    FadeIn = (arg) => {
+        this.#FadeIn(0, this.#callback);
+    }
+
+
 
     MoveText(i, t, r, b, l) 
     {

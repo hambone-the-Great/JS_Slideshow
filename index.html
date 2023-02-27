@@ -10,25 +10,28 @@
         <p>JS Slideshow is a simple and lightweight Javascript Slideshow.</p>
         <p>Here is an example of JS Slideshow:</p>
 
-        <div id="mySlideshow" class="slideshow">
-            <div class="slide">
-                <h1>Slide 1</h1>
-            </div>
-            <div class="slide">
-                <h1>Slide 2</h1>
-            </div>
-
-
-        </div>
+        <div id="mySlideshow" class="slideshow"></div>
 
         <script>
 
             let slideshow = new Slideshow("mySlideshow"); 
-            
-            slideshow.SlideCollection[0].FadeOut(100); 
+            let slide1 = new Slide();
+            slide1.TextContent = "Hello World"; 
+            slide1.ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg";
+            slide1.ImageSize = "contain";
+            slide1.Width = "100%";
+            slide1.Height = "550px";            
+            slideshow.AddSlide(slide1);
 
-            // slideshow.Start();
+            let slide2 = new Slide();
+            slide2.TextContent = "Bitch Please!";
+            slide2.ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg";
+            slide2.ImageSize = "contain";
+            slide2.Width = "100%";
+            slide2.Height = "550px";
+            slideshow.AddSlide(slide2);                        
 
+            slideshow.Start();
 
 
         </script>
