@@ -523,98 +523,15 @@ class Slide
 
 
     FadeOut() 
-    {
+    {        
 
-        const slideFading = [
-            { opacity: "1" },
-            { opacity: "0" }
-        ];
-
-        const slideTiming = {
-            duration: 2000,
-            iterations: 1
-        };
-
-        this.#element.animate(slideFading, slideTiming);
-
-        //var me = this; 
-                             
-        //if (_opacity <= 0) 
-        //{
-        //    me.Element.style.opacity = 0; 
-        //    me.Element.style.display = "none";
-        //    if (callback) callback(_opacity);
-        //    return;
-        //}
-
-        //me.Element.style.display = "block";
-        //_opacity = _opacity - 0.02;
-        //me.Element.style.opacity = _opacity;
-
-        //window.setTimeout(function(){
-        //    me.#FadeOut(_opacity, callback); 
-        //    return;
-        //}, 75); 
-
-        //return;
     }
 
 
-    FadeIn(speed)
+    FadeIn()
     {
 
-        const slideFading = [
-            { opacity: "0" },
-            { opacity: "1" }
-        ];
-
-        const slideTiming = {
-            duration: 2000,
-            iterations: 1
-        };
-
-        this.#element.animate(slideFading, slideTiming);
-      
     }
-
-    //#CalculateSpeed(speed) {
-
-    //    let milliseconds = 75; //time of interval
-    //    let stepSize = 1; //the increase of the incrementor in the animation. 
-
-    //    if (speed) {
-
-    //        switch (speed) {
-    //            case "slow":
-    //                milliseconds = 100;
-    //                stepSize = 1; 
-    //                break;
-    //            case "fast":
-    //                milliseconds = 75;
-    //                stepSize = 2; 
-    //                break;
-    //            default:
-    //                milliseconds = 75;
-    //                stepSize = 1; 
-    //                break;
-    //        }
-    //    }
-    //    return {
-    //        Milliseconds: milliseconds,
-    //        StepSize: stepSize
-    //    }
-
-    //}
-
-
-    //FadeOut = (sender) => {
-    //    this.#FadeOut(1, this.#callback); 
-    //}
-
-    //FadeIn = (sender) => {
-    //    this.#FadeIn(0, this.#callback);
-    //}
-
 
 
     MoveText(i, t, r, b, l) 
