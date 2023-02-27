@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+
+        <script src="Slideshow.js"></script>
+        <link href="slideshow.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <h1>Welcome to JS Slideshow</h1>
         <p>JS Slideshow is a simple and lightweight Javascript Slideshow.</p>
+        <p>Here is an example of JS Slideshow:</p>
+
+        <div id="mySlideshow" class="slideshow">
+
+
+        </div>
+
+        <script>
+
+            let slideshow = new Slideshow("mySlideshow"); 
+            
+            slideshow.Start();
+
+        </script>
+
     </body>
 </html>
 
