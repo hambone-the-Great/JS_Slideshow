@@ -1,5 +1,4 @@
-
-/**
+ /**
  * A cool class for creating a slideshow. 
  */
 class Slideshow 
@@ -324,7 +323,8 @@ class Slideshow
  * The Slide class is used in the Slideshow class. 
  * A slide is a JS object used to create or interact with the top level child element(s) of the slideshow container element. 
  */
-class Slide {
+class Slide 
+{
 
     #element = null;
     #imageUrl = ""; 
@@ -416,5 +416,47 @@ class Slide {
         }
 
     }
+
+
+    FadeOut(_opacity) 
+    {
+        var me = this; 
+        
+        console.log(me);         
+        
+        if (_opacity <= 0) return; 
+
+        _opacity--; 
+
+        me.Element.style.opacity = _opacity; 
+
+        window.setTimeout(function(){
+            me.FadeOut(_opacity); 
+            return;
+        }, 25); 
+        return;
+    }
+
+
+    FadeIn(_opacity)
+    {
+
+    }
+
+    MoveText(i, t, r, b, l) 
+    {
+        
+    }
+
+    SlideLeft(d)
+    {
+
+    }
+
+    SlideRight(d)
+    {
+
+    }
+
     
 }
