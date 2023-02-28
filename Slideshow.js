@@ -117,7 +117,8 @@ class Slideshow
         return this.#backgroundColor; 
     }
 
-    set BackgroundColor(v){
+    set BackgroundColor(v) {
+        this.#container.style.backgroundColor = v; 
         this.#backgroundColor = v; 
     }
 
@@ -241,7 +242,7 @@ class Slideshow
         let easing = "ease-in-out"; 
 
         slide.MoveText(top, left, size, easing);
-        slide.MoveImage("auto 80%", "auto 90%");
+        slide.MoveImage("auto 1%", "auto 100%");
     }
 
 
@@ -733,13 +734,23 @@ class Slide
         let el = this.#element;
         el.style.opacity = 1; 
         el.style.display = "block";
+        el.style.position = "absolute";
 
-        let frames = [
-            { right: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
-            { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
-        ];
+        //let frames = [
+        //    { right: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
+        //    { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
+        //];
 
-        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+        let frames = {
+            right: ["1%", "100%"]
+        };
+
+        let timing = {
+            duration: this.#animationDuration,
+            iterations: 1
+        };
+
+        let effect = new KeyframeEffect(el, frames, timing);
 
         let animation = new Animation(effect, document.timeline);
 
@@ -776,13 +787,28 @@ class Slide
         let el = this.#element;
         el.style.opacity = 1;
         el.style.display = "block";
+        /*el.style.position = "absolute";*/
+        //el.style.width = el.offsetWidth + "px"; 
+        //el.style.height = el.offsetHeight + "px";
 
-        let frames = [
-            { left: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
-            { left: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
-        ];
+        //let frames = [
+        //    { left: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
+        //    { left: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
+        //];
 
-        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+        let frames = {
+            left: ["1%", "100%"],
+            position: ["absolute", "absolute"],
+            width: [el.offsetWidth + "px", el.offsetWidth + "px"],
+            height: [el.offsetHeight + "px", el.offsetHeight + "px"]
+        };
+
+        let timing = {
+            duration: this.#animationDuration,
+            iterations: 1
+        };
+
+        let effect = new KeyframeEffect(el, frames, timing);
 
         let animation = new Animation(effect, document.timeline);
 
@@ -800,6 +826,8 @@ class Slide
         animation.onfinish = function () {                        
             el.style.display = "none";
             el.style.opacity = 0;
+            el.style.width = el.offsetWidth + "px";
+            el.style.height = el.offsetHeight + "px";
             document.body.removeAttribute("style");
 
             if (callback) {

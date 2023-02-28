@@ -1,10 +1,14 @@
+
+@import "https://meyerweb.com/eric/tools/css/reset/reset200802.css";
+
+
 :root {
     --slideshow-height:500px;
     --slideshow-fontsize:3em;
 }
 
 .slideshow {
-    width:99%;
+    width:100%;
     height:var(--slideshow-height);
     font-family: 'Open Sans', sans-serif !important;
     background-color:#fff;

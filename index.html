@@ -16,12 +16,16 @@
 
             let slides = [
                 {
-                    Text: "California",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
+                    Text: "North Dakota",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
                 },
                 {
                     Text: "Minnesota",
                     Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
+                },
+                {
+                    Text: "California",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
                 },
                 {
                     Text: "Arizona",
@@ -31,10 +35,7 @@
                     Text: "Colorado",
                     Image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg"
                 },
-                {
-                    Text: "North Dakota",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
-                },
+
                 {
                     Text: "South Carolina",
                     Image: "https://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg"
@@ -47,14 +48,28 @@
                     Text: "Texas",
                     Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg"
                 },
+                {
+                    Text: "Florida",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg"
+                },
+                {
+                    Text: "New Hampshire",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_New_Hampshire.svg"
+                },
+                {
+                    Text: "Pew Pew Pew",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gadsden_flag.svg"
+                },
 
             ];
 
             let slideshow = new Slideshow("mySlideshow");
-
+            slideshow.BackgroundColor = "#333";
             for (let i = 0; i < slides.length; i++) {
 
-                let slide = new Slide();
+                preloadImage(slides[i].Image);
+
+                let slide = new Slide();               
                 slide.Width = "100%";
                 slide.Height = "100%";
                 slide.TextContent = slides[i].Text;
@@ -65,8 +80,8 @@
                 slide.ImagePosition = "bottom";
                 slide.AnimationDuration = 1000;
                 slide.Animation1Delay = 1000;
-                slide.Animation1 = slide.FadeIn;
-                slide.Animation2 = slide.FadeOut;
+                slide.Animation1 = slide.SlideInFromLeft;
+                slide.Animation2 = slide.SlideOutRight;
                 slideshow.AddSlide(slide); 
             }
 
@@ -74,6 +89,18 @@
 
             Slideshow.LoopSlideshow(slideshow, 0); 
 
+
+            function preloadImage(url) {
+
+                let list = [];
+                let img = new Image();
+                img.onload = function () {
+                    list.push(img); 
+                }
+                img.src = url;
+                
+                list.pop(img);                
+            }
 
 
         </script>
