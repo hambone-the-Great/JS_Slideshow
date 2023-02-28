@@ -12,7 +12,7 @@ class Slideshow
     #moveImages = true;
     #slideCollection = [];
     #cancel = false; 
-    #currentSlide = null; 
+    #currentSlideIndex = null; 
     #currentStep = null; 
     #showControls = false; 
     #backgroundColor = "#fff";
@@ -98,11 +98,11 @@ class Slideshow
     }
 
     get CurrentSlideIndex(){
-        return this.#currentSlide;
+        return this.#currentSlideIndex;
     }
 
     set CurrentSlideIndex(v){
-        this.#currentSlide = v;
+        this.#currentSlideIndex = v;
     }
 
     get ShowControls(){
@@ -164,7 +164,8 @@ class Slideshow
         slide.Element.style.backgroundPosition = slide.ImagePosition;
         slide.Element.style.backgroundSize = slide.ImageSize;
         slide.Element.style.width = slide.Width;
-        slide.Element.style.height = slide.Height; 
+        slide.Element.style.height = slide.Height;
+        slide.ParentSlideshow = this; 
         this.#slideCollection.push(slide); 
     }
 
@@ -216,41 +217,45 @@ class Slideshow
         if (!i) i = 0; 
 
         if (i >= slideshow.SlideCollection.length) i = 0;
-
+        
         let slide = slideshow.SlideCollection[i];
 
-        slideshow.CurrentSlide = slide;
-
+        slideshow.CurrentSlideIndex = i;
+        
         slide.Animation1Complete = false;
         slide.Animation1Callback = slide.Animation2;
+        slide.Element.style.display = "block";
+        slide.Element.style.opacity = 1;
+        slide.TextHolder.style.margin = "0px auto";
         
-        i++;
-
-        slide.Animation2Callback = function () {
-            slide.Element.style.display = "none";
-            slide.Element.style.opacity = 0;
-            slide.TextHolder.style.margin = "0px";
-            Slideshow.LoopSlideshow(slideshow, i); 
-        };
-
         slide.Animation1();
 
         slide.Animation1Complete = true;
 
+        slide.Animation2Callback = function () {
 
+            slide.Element.style.display = "none";
+            slide.Element.style.opacity = 0;
+            slide.TextHolder.style.margin = "0px auto";
+            slide.TextHolder.style.fontSize = "3em";
+
+            Slideshow.LoopSlideshow(slideshow, ++i);
+        };
+
+       
         let bigWidth = slide.Element.offsetWidth;
-        let txtWidth = slide.TextHolder.offsetWidth;
-        let leftPos = slide.TextHolder.offsetLeft + "px";
-        let leftMargin = ((bigWidth - txtWidth) / 2) - (txtWidth / 4) + "px";
-        let topMargin = slide.Element.offsetHeight * 0.8 + "px";
+        let txtWidth = slide.TextHolder.offsetWidth;        
+        let leftMargin = ((bigWidth - txtWidth) / 2.885);
+        let topMargin = slide.Element.offsetHeight * 0.7 + "px";
 
         let top = { from: "0px", to: topMargin };
-        let left = { from: leftPos, to: leftMargin };
-        let size = { from: "0.1em", to: "5em" };
+        let left = { from: leftMargin + "px", to: leftMargin + "px" };
+        let size = { from: "0.1em", to: "6em" };
         let easing = "ease-in-out"; 
 
         slide.MoveText(top, left, size, easing);
-        slide.MoveImage("auto 1%", "auto 100%");
+        slide.MoveImage("auto 10%", "auto 100%");
+
     }
 
 
@@ -281,7 +286,7 @@ class Slideshow
         if (target.dataset.toggle == "playing") 
         {
             target.dataset.toggle = "paused"; 
-            //this.#cancel = true; 
+            this.#cancel = true; 
             target.classList.remove("pause");
             target.classList.add("play");
 
@@ -289,10 +294,10 @@ class Slideshow
         else 
         {
             target.dataset.toggle = "playing"; 
-            //this.#cancel = false; 
+            this.#cancel = false; 
             target.classList.remove("play");
             target.classList.add("pause");
-            //this.FadeIn(this.#currentStep, this.#currentSlide);
+            Slideshow.LoopSlideshow(this, this.#currentSlideIndex);
         }        
     }
 
@@ -311,7 +316,7 @@ class Slideshow
         var slide = this.#slideElements[j];        
 
         this.#currentStep =  i;
-        this.#currentSlide = j;
+        this.#currentSlideIndex = j;
                 
         if (this.#cancel) return; 
 
@@ -352,7 +357,7 @@ class Slideshow
     {                            
 
         this.#currentStep =  i;
-        this.#currentSlide = j;
+        this.#currentSlideIndex = j;
 
         if (this.#cancel) return;
 
@@ -427,6 +432,7 @@ class Slide
     #animation2Callback = null;
     #animation1Complete = false;
     #animation2Complete = false;
+    #parentSlideshow = null; 
 
     /* The Html Element */     
     get Element() { return this.#element; }
@@ -540,6 +546,9 @@ class Slide
     get Animation2Complete() { return this.#animation2Complete; }
     set Animation2Complete(v) { this.#animation2Complete = v; }
 
+    get ParentSlideshow() { return this.#parentSlideshow; }
+    set ParentSlideshow(v) { this.#parentSlideshow = v; }
+
 
 
     /**
@@ -635,11 +644,11 @@ class Slide
 
 
     FadeIn = (sender) => {
-        this.#FadeIn();
+        return this.#FadeIn();
     }
 
     FadeOut = (sender) => {
-        this.#FadeOut();
+        return this.#FadeOut();
     }
 
 
@@ -660,7 +669,7 @@ class Slide
         let effect = new KeyframeEffect(el, frames, this.#animationDuration);         
 
         let animation = new Animation(effect, document.timeline);
-
+       
         let callback = this.#animation1Callback;
         let delay = this.#animation1Delay;
 
@@ -680,6 +689,10 @@ class Slide
 
         animation.play();
 
+        if (this.#parentSlideshow.Cancel) animation.pause();
+
+        return animation; 
+
     }
 
     #FadeOut() {        
@@ -698,7 +711,7 @@ class Slide
 
         let effect = new KeyframeEffect(el, frames, this.#animationDuration);
 
-        let animation = new Animation(effect, document.timeline);
+        let animation = new Animation(effect, document.timeline);        
 
         let callback = this.#animation1Callback;
         let delay = this.#animation1Delay;
@@ -721,16 +734,20 @@ class Slide
 
         animation.play();
 
+        if (this.#parentSlideshow.Cancel) animation.pause();
+
+        return animation; 
+
     }
 
        
 
     SlideOutLeft = (sender) => {
-        this.#SlideOutLeft();
+        return this.#SlideOutLeft();
     }
 
     SlideOutRight = (sender) => {
-        this.#SlideOutRight();
+        return this.#SlideOutRight();
     }
 
 
@@ -742,15 +759,18 @@ class Slide
         let el = this.#element;
         el.style.opacity = 1; 
         el.style.display = "block";
-        el.style.position = "absolute";
+        //el.style.position = "absolute";
 
-        //let frames = [
-        //    { right: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
-        //    { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
-        //];
+        ////let frames = [
+        ////    { right: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
+        ////    { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
+        ////];
 
         let frames = {
-            right: ["1%", "100%"]
+            right: ["1%", "100%"],
+            position: ["absolute", "absolute"],
+            width: [el.offsetWidth + "px", el.offsetWidth + "px"],
+            height: [el.offsetHeight + "px", el.offsetHeight + "px"]
         };
 
         let timing = {
@@ -761,7 +781,7 @@ class Slide
         let effect = new KeyframeEffect(el, frames, timing);
 
         let animation = new Animation(effect, document.timeline);
-
+       
         let callback = this.#animation1Callback;
         let delay = this.#animation1Delay;
 
@@ -785,6 +805,10 @@ class Slide
 
         animation.play();
 
+        if (this.#parentSlideshow.Cancel) animation.pause();
+
+        return animation; 
+
     }
 
     #SlideOutRight()
@@ -795,14 +819,6 @@ class Slide
         let el = this.#element;
         el.style.opacity = 1;
         el.style.display = "block";
-        /*el.style.position = "absolute";*/
-        //el.style.width = el.offsetWidth + "px"; 
-        //el.style.height = el.offsetHeight + "px";
-
-        //let frames = [
-        //    { left: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
-        //    { left: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
-        //];
 
         let frames = {
             left: ["1%", "100%"],
@@ -834,8 +850,7 @@ class Slide
         animation.onfinish = function () {                        
             el.style.display = "none";
             el.style.opacity = 0;
-            el.style.width = el.offsetWidth + "px";
-            el.style.height = el.offsetHeight + "px";
+
             document.body.removeAttribute("style");
 
             if (callback) {
@@ -845,14 +860,18 @@ class Slide
         };
 
         animation.play();
+
+        if (this.#parentSlideshow.Cancel) animation.pause();
+
+        return animation;
     }
 
     SlideInFromRight = (sender) => {
-        this.#SlideInFromRight();
+        return this.#SlideInFromRight();
     }
 
     SlideInFromLeft = (sender) => {
-        this.#SlideInFromLeft();
+        return this.#SlideInFromLeft();
     }
 
     #SlideInFromLeft() {
@@ -863,12 +882,25 @@ class Slide
         el.style.opacity = 1;
         el.style.display = "block";
 
-        let frames = [
-            { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
-            { right: "0px", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
-        ];
+        //let frames = [
+        //    { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
+        //    { right: "0px", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
+        //];
 
-        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+
+        let frames = {
+            right: ["100%", "0%"],
+            position: ["absolute", "absolute"],
+            width: [el.offsetWidth + "px", el.offsetWidth + "px"],
+            height: [el.offsetHeight + "px", el.offsetHeight + "px"]
+        };
+
+        let timing = {
+            duration: this.#animationDuration,
+            iterations: 1
+        };
+
+        let effect = new KeyframeEffect(el, frames, timing);
 
         let animation = new Animation(effect, document.timeline);
 
@@ -890,9 +922,14 @@ class Slide
             if (callback) {
                 window.setTimeout(callback, delay);
             }
-        };
+        };        
 
         animation.play();
+
+        if (this.#parentSlideshow.Cancel) animation.pause();
+
+        return animation; 
+
     }
 
     #SlideInFromRight() {
@@ -902,15 +939,27 @@ class Slide
         let el = this.#element;
         el.style.opacity = 1;
         el.style.display = "block";
-        el.style.width = el.offsetWidth;
-        el.style.height = el.offsetHeight;
+        //el.style.width = el.offsetWidth;
+        //el.style.height = el.offsetHeight;
 
-        let frames = [
-            { left: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
-            { left: "0px", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
-        ];
+        //let frames = [
+        //    { left: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
+        //    { left: "0px", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
+        //];
 
-        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+        let frames = {
+            left: ["100%", "0%"],
+            position: ["absolute", "absolute"],
+            width: [el.offsetWidth + "px", el.offsetWidth + "px"],
+            height: [el.offsetHeight + "px", el.offsetHeight + "px"]
+        };
+
+        let timing = {
+            duration: this.#animationDuration,
+            iterations: 1
+        };
+
+        let effect = new KeyframeEffect(el, frames, timing);
 
         let animation = new Animation(effect, document.timeline);
 
@@ -935,6 +984,10 @@ class Slide
         };
 
         animation.play();
+
+        if (this.#parentSlideshow.Cancel) animation.pause();
+
+        return animation; 
     }
 
 
@@ -945,8 +998,8 @@ class Slide
                 
         let frames = {            
             marginTop: [top.from, top.to],
+            fontSize: [size.from, size.to],
             left: [left.from, left.to],
-            fontSize: [size.from, size.to],            
             easing: _easing
         };
 
@@ -960,11 +1013,15 @@ class Slide
         let animation = new Animation(effect, document.timeline);
 
         animation.onfinish = function () {
-            el.style.marginTop = top.to;
-            el.style.left = left.to;
-            el.style.fontSize = size.to; 
+            el.style.marginTop = top.to;            
+            el.style.fontSize = size.to;
+            el.style.left = (el.parentNode.offsetWidth - el.offsetWidth) / 2 + "px";
+
         }
+
         animation.play();
+
+        if (this.#parentSlideshow.Cancel) animation.pause();
     }
 
     MoveImage(from, to) {
@@ -993,6 +1050,7 @@ class Slide
 
         animation.play();
 
+        if (this.#parentSlideshow.Cancel) animation.pause();
 
     }
 

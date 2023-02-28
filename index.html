@@ -27,39 +27,39 @@
                     Text: "California",
                     Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
                 },
-                {
-                    Text: "Arizona",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arizona.svg"
-                },
-                {
-                    Text: "Colorado",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg"
-                },
+                //{
+                //    Text: "Arizona",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arizona.svg"
+                //},
+                //{
+                //    Text: "Colorado",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg"
+                //},
 
-                {
-                    Text: "South Carolina",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg"
-                },
-                {
-                    Text: "Wyoming",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Wyoming.svg"
-                },
-                {
-                    Text: "Texas",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg"
-                },
-                {
-                    Text: "Florida",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg"
-                },
-                {
-                    Text: "New Hampshire",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_New_Hampshire.svg"
-                },
-                {
-                    Text: "Pew Pew Pew",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gadsden_flag.svg"
-                },
+                //{
+                //    Text: "South Carolina",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg"
+                //},
+                //{
+                //    Text: "Wyoming",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Wyoming.svg"
+                //},
+                //{
+                //    Text: "Texas",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg"
+                //},
+                //{
+                //    Text: "Florida",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg"
+                //},
+                //{
+                //    Text: "New Hampshire",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_New_Hampshire.svg"
+                //},
+                //{
+                //    Text: "Pew Pew Pew",
+                //    Image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gadsden_flag.svg"
+                //},
 
             ];
 
@@ -77,8 +77,9 @@
                 slide.TextContent = slides[i].Text;
                 slide.TextColor = "#fff";
                 slide.TextHolder.classList.add("dropshadow");
+                slide.TextHolder.style.margin = "0px";
                 slide.ImageUrl = slides[i].Image;
-                slide.ImageSize = "auto 80%";
+                slide.ImageSize = "auto 100%";
                 slide.ImagePosition = "bottom";
                 slide.AnimationDuration = 1000;
                 slide.Animation1Delay = 1000;
@@ -87,8 +88,7 @@
                 slideshow.AddSlide(slide); 
             }
 
-                       
-
+                      
             slideshow.Start();
 
             //does this really do anything? found it on stackoverflow....sus, very sus. 
