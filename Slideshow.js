@@ -516,9 +516,9 @@ class Slide
         this.#element = document.createElement("div");        
         this.#textHolder = document.createElement("span");
 
-
         if (content) {
-            this.#textContent = content;                                     
+            this.#textContent = content;    
+            this.#textHolder.innerHTML = content;                                  
         }      
 
         if (pos) {
