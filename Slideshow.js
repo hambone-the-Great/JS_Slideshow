@@ -301,7 +301,7 @@ class Slideshow
 
         if (this.#moveImages){
             slide.style.paddingTop = paddingTop;      
-            slide.style.paddingRight = paddingRight;       
+            //slide.style.paddingRight = paddingRight;       
         }
         
         window.setTimeout(() => {            
