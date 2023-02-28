@@ -77,9 +77,17 @@
     color:#333;
 }
 
-.slideshow .whitebg {
-    background-color: #fff !important;
-}
+    .slideshow .whiteTxt {
+        color:#fff;
+    }
+
+    .slideshow .txtShadow {
+        text-shadow:3px 3px 5px #222;
+    }
+
+    .slideshow .whitebg {
+        background-color: #fff !important;
+    }
 
 .slideshow .dropshadow {
     text-shadow:2px 2px 4px #333;

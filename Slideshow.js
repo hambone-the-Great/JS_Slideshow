@@ -127,7 +127,7 @@ class Slideshow
    
     /**
      * The slideshow constructor! :-) Woot! 
-     * @param {string} id //The ID of the Slideshow wrapper element. 
+     * @param {string} id //The ID of the Slideshow wrapper (div) element. 
      */
     constructor(id)
     {    
@@ -138,18 +138,52 @@ class Slideshow
             el.classList.add("slideshow");
             document.appendChild(div);         
         }        
-        this.#container = el; 
-        this.#slideElements = el.children;  
-        
-        for (let i = 0; i < this.#slideElements.length; i++) 
-        {
-            let slide = new Slide(); 
-            slide.Element = this.#slideElements[i]; 
-            this.#slideCollection.push(slide);             
+
+        this.#container = el;
+
+        this.#slideElements = el.children;
+
+        if (this.#slideCollection.length <= 0) {
+
+            let randStr = Slideshow.#MakeId(6); 
+
+            for (let i = 0; i < this.#slideElements.length; i++) {
+
+                let el = this.#slideElements[i];
+                let cssClasses = el.classList.toString();
+
+                let slide = new Slide();
+                slide.ParentSlideshow = this;
+                slide.Id = "slide_" + randStr + "_" + i;
+                slide.Element = el;
+                slide.CssClass = cssClasses;
+                slide.Animation1 = slide.FadeIn;
+                slide.Animation2 = slide.FadeOut;
+                slide.Width = this.#container.offsetWidth + "px";
+                slide.Height = this.#container.offsetHeight + "px";
+                              
+
+                if (el.style.backgroundImage) {
+                    let bgValue = el.style.backgroundImage;
+                    let imgUrl = bgValue.split('url("')[1];
+                    imgUrl = imgUrl.split('")')[0];
+                    slide.ImageUrl = imgUrl;
+                }
+
+                slide.Element.style.background = "url(" + slide.ImageUrl + ")";
+                slide.Element.style.backgroundRepeat = "no-repeat";
+                slide.Element.style.backgroundPosition = slide.ImagePosition;
+                slide.Element.style.backgroundSize = slide.ImageSize;
+                slide.Element.style.width = slide.Width;
+                slide.Element.style.height = slide.Height;
+
+                
+                this.#slideCollection.push(slide);
+            }
         }
+    }
 
         
-    }
 
     /**
      * Adds the slide to the to the slideshow container. 
@@ -187,6 +221,14 @@ class Slideshow
      */
     Start() 
     {              
+        let startPos;
+
+        if (this.#startingSlide >= 0) {
+            startPos = this.#startingSlide;
+        }
+        else {
+            startPos = Math.floor(Math.random() * this.#slideCollection.length);
+        }
 
         if (this.#showControls) {
              this.CreateControls();
@@ -196,20 +238,20 @@ class Slideshow
             this.#container.style.backgroundColor = this.#backgroundColor;
         }
 
-        
+        Slideshow.LoopSlideshow(this, startPos);
 
-        switch (this.#animationType.toLowerCase())
-        {
-            case "fade":  
-                this.FadeIn(0, this.#startingSlide);
-                break;
-            case "slide":
-                this.SlideLeft(0, this.#startingSlide);
-                break;
-            case "loop":
-                Slideshow.LoopSlideshow(this, 0);
-                break;
-        }
+        //switch (this.#animationType.toLowerCase())
+        //{
+        //    case "fade":  
+        //        this.FadeIn(0, this.#startingSlide);
+        //        break;
+        //    case "slide":
+        //        this.SlideLeft(0, this.#startingSlide);
+        //        break;
+        //    case "loop":
+        //        Slideshow.LoopSlideshow(this, 0);
+        //        break;
+        //}
     }
 
     static LoopSlideshow(slideshow, i) {        
@@ -250,7 +292,7 @@ class Slideshow
 
         let top = { from: "0px", to: topMargin };
         let left = { from: leftMargin + "px", to: leftMargin + "px" };
-        let size = { from: "0.1em", to: "6em" };
+        let size = { from: "0.1em", to: "3em" };
         let easing = "ease-in-out"; 
 
         slide.MoveText(top, left, size, easing);
@@ -301,89 +343,111 @@ class Slideshow
         }        
     }
 
-    /**
-     * The FadeIn Recursive function! 
-     * @param {*} i //integer; the seed used to generate the opacity of the slide. 
-     * @param {*} j //integer; tells us which slide we're on. 
-     * @returns 
-     */
-    FadeIn(i, j) 
-    {   
+    ///**
+    // * The FadeIn Recursive function! 
+    // * @param {*} i //integer; the seed used to generate the opacity of the slide. 
+    // * @param {*} j //integer; tells us which slide we're on. 
+    // * @returns 
+    // */
+    //FadeIn(i, j) 
+    //{   
                 
-        var paddingTop = ((i * 3) + 10) + "px"; 
-        var paddingRight = (i + 2) + "px"; 
-        var opacity = i / 100; 
-        var slide = this.#slideElements[j];        
+    //    var paddingTop = ((i * 3) + 10) + "px"; 
+    //    var paddingRight = (i + 2) + "px"; 
+    //    var opacity = i / 100; 
+    //    var slide = this.#slideElements[j];        
 
-        this.#currentStep =  i;
-        this.#currentSlideIndex = j;
+    //    this.#currentStep =  i;
+    //    this.#currentSlideIndex = j;
                 
-        if (this.#cancel) return; 
+    //    if (this.#cancel) return; 
 
-        if (i >= 100){                                   
-            //console.log(this.#container.id + " slide #" + j);
-            window.setTimeout(() => {
-                this.FadeOut(i, j);                            
-                return;        
-            }, this.#pauseDuration);
+    //    if (i >= 100){                                   
+    //        //console.log(this.#container.id + " slide #" + j);
+    //        window.setTimeout(() => {
+    //            this.FadeOut(i, j);                            
+    //            return;        
+    //        }, this.#pauseDuration);
             
-            return;
-        }
+    //        return;
+    //    }
         
-        slide.classList.add("show");
-        slide.style.opacity = opacity;    
+    //    slide.classList.add("show");
+    //    slide.style.opacity = opacity;    
 
-        if (this.#moveImages){
-            slide.style.paddingTop = paddingTop;      
-            //slide.style.paddingRight = paddingRight;       
-        }
+    //    if (this.#moveImages){
+    //        slide.style.paddingTop = paddingTop;      
+    //        //slide.style.paddingRight = paddingRight;       
+    //    }
         
-        window.setTimeout(() => {            
-            i++;
-            this.FadeIn(i, j); 
-            return; 
-        }, this.#animationDuration);
+    //    window.setTimeout(() => {            
+    //        i++;
+    //        this.FadeIn(i, j); 
+    //        return; 
+    //    }, this.#animationDuration);
 
-        return;
-    }
+    //    return;
+    //}
     
+    ///**
+    // * The FadeOut Recursive Function! :-) 
+    // * @param {*} i //integer; the seed used to generate the opacity of the slide. 
+    // * @param {*} j //integer; tells us which slide we're fading. 
+    // * @returns 
+    // */
+    //FadeOut(i, j) 
+    //{                            
+
+    //    this.#currentStep =  i;
+    //    this.#currentSlideIndex = j;
+
+    //    if (this.#cancel) return;
+
+    //    var opacity = i / 100; 
+    //    var slide = this.#slideElements[j];         
+
+    //    if (i <= 0) 
+    //    {        
+    //        slide.classList.remove("show");            
+    //        j++;
+    //        j = this.#slideElements.length > j ? j : 0; 
+    //        this.FadeIn(i, j);  
+    //        return;                   
+    //    }
+        
+    //    slide.style.opacity = opacity;
+        
+
+    //    window.setTimeout(() => {                
+    //        i--;
+    //        this.FadeOut(i, j); 
+    //        return;
+    //    }, this.#animationDuration);
+        
+    //    return;
+    //}
+
     /**
-     * The FadeOut Recursive Function! :-) 
-     * @param {*} i //integer; the seed used to generate the opacity of the slide. 
-     * @param {*} j //integer; tells us which slide we're fading. 
-     * @returns 
-     */
-    FadeOut(i, j) 
-    {                            
-
-        this.#currentStep =  i;
-        this.#currentSlideIndex = j;
-
-        if (this.#cancel) return;
-
-        var opacity = i / 100; 
-        var slide = this.#slideElements[j];         
-
-        if (i <= 0) 
-        {        
-            slide.classList.remove("show");            
-            j++;
-            j = this.#slideElements.length > j ? j : 0; 
-            this.FadeIn(i, j);  
-            return;                   
+     * Thanks csharptest.net & Code_Worm
+     * 
+     * https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+     * https://stackoverflow.com/users/164392/csharptest-net
+     * https://stackoverflow.com/users/3917465/code-worm     
+     * 
+     * */
+    static #MakeId() {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        let counter = 0;
+        while (counter < length) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            counter += 1;
         }
-        
-        slide.style.opacity = opacity;
-        
-
-        window.setTimeout(() => {                
-            i--;
-            this.FadeOut(i, j); 
-            return;
-        }, this.#animationDuration);
-        
-        return;
+        return result;
     }
+
+
 }
 
 
@@ -392,28 +456,16 @@ class Slideshow
 
 /**
  * 
- * 
- * 
- * 
- * 
- * 
- * 
  * The Slide class is used in the Slideshow class. 
  * 
  * A slide is a JS object used to create or interact with the top level child element(s) 
  * of the slideshow container element. 
  * 
- * 
- * 
- * 
- * 
- * 
- * 
  */
 class Slide 
 {
-
-    #element = null;    
+    #id = ""; 
+    #element = null;
     #textHolder = null;
     #textContent = "";
     #textColor = "#000";
@@ -433,6 +485,12 @@ class Slide
     #animation1Complete = false;
     #animation2Complete = false;
     #parentSlideshow = null; 
+
+    get Id() { return this.#id; }
+    set Id(v) {
+        this.#element.id = v;
+        this.#id = v; 
+    }
 
     /* The Html Element */     
     get Element() { return this.#element; }
@@ -497,13 +555,14 @@ class Slide
     }
     set CssClass(v)
     {
+        this.#cssClass = v;
+                
         let classes = v.split(" ");
-        for (let i = 0; i < classes.length; i++)
-        {
+        for (let i = 0; i < classes.length; i++) {
             let _class = classes[i];
             this.#element.classList.add(_class);
-        }        
-        this.#cssClass = v;
+        }                    
+
     }
 
     get ImagePosition() { return this.#imagePosition; }
@@ -582,14 +641,20 @@ class Slide
         }
 
         if (css) {            
-                        
-            this.#cssClass = css; 
 
-            let classes = css.split(' '); 
+            if (Array.isArray(css)) {
+                this.#element.classList = css;
+            }
+            else {
 
-            for (var key in classes)
-            {
-                this.#element.classList.add(classes[key]);
+
+                this.#cssClass = css;
+
+                let classes = css.split(' ');
+
+                for (var key in classes) {
+                    this.#element.classList.add(classes[key]);
+                }
             }
         }     
                 
