@@ -27,6 +27,12 @@
         h5 { font-size:1em; }
         h6 { font-size:0.75em; }
 
+        ul {
+            list-style-position:inside;
+            list-style-type:circle;
+            margin-left:25px;
+        }
+
         p, span, a, li {
             font-size:1.2em;
             line-height:1.5em;
@@ -41,7 +47,7 @@
 
         pre {
             background-color:#333;
-            color:yellow;
+            color:lightblue;
             font-size:18px;
             border-radius:8px;             
         }
@@ -66,57 +72,94 @@
     </div>
 <div class="container">
 
+    <h3>Features:</h3>
+    <ul>
+        <li>Slides can include text or images or both.</li>
+        <li>Lightweight, vanilla Javascript; no need for 3rd party libraries.</li>
+        <li>Compatible with all modern browsers, including mobile.</li>
+        <li>Multiple animation options available. </li>
+        <li>Text can be animated too!</li>
+        <li>Works with all image types!</li>
+        <li>Flexible and easy to use!</li>
+        <li>It's free and open source!</li>
+        <li>It's hosted on GitHub: <a href="https://github.com/hambone-the-Great/JS_Slideshow/tree/Live">https://github.com/hambone-the-Great/JS_Slideshow/tree/Live</a></li>
+    </ul>
+
+
 <h3>Here is a code example:</h3>
 <pre>        
 
-    let slides = [
-        {
-            Text: "North Dakota",
-            Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
-        },
-        {
-            Text: "Minnesota",
-            Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
-        },
-        {
-            Text: "California",
-            Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
+    &lt;!-- Make sure you include a reference to the JS Slideshow classes. --&gt;
+    &lt;script src="https://hambone-the-great.github.io/JS_Slideshow/Slideshow.js"&gt;&lt;/script&gt;
+    
+    &lt;!-- You can also use our pre-defined CSS styles if you wish! --&gt;
+    &lt;link href="slideshow.css" rel="stylesheet" type="text/css" /&gt;  
+    
+    &lt;!-- A simple div with your desired id is the container for the slideshow. --&gt;
+    &lt;div id="mySlideshow" class="slideshow"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+
+
+        //An array that contains data used in this slideshow. 
+        //The slides can also be pre-populated in staic HTML. 
+        //Here we're adding the slides dynamically with Javascript.
+
+        let slides = [
+            {
+                Text: "North Dakota",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
+            },
+            {
+                Text: "Minnesota",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
+            },
+            {
+                Text: "Friends!",
+                Image: "images/friends.gif"
+            },
+            {
+                Text: "California",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
+            }
+        
+        ];
+
+        //Initiate the Slideshow. 
+        let slideshow = new Slideshow("mySlideshow");
+
+        slideshow.BackgroundColor = "#333";
+        slideshow.ShowControls = true;
+        slideshow.AnimationType = "Loop";
+
+        for (let i = 0; i < slides.length; i++) {
+        
+            //Create the Slide Object. 
+            let slide = new Slide();
+        
+            slide.Width = "100%";
+            slide.Height = "100%";
+            slide.TextContent = slides[i].Text;
+            slide.TextColor = "#fff";
+            slide.TextHolder.classList.add("dropshadow");
+            slide.TextHolder.style.margin = "0px";
+            slide.ImageUrl = slides[i].Image;
+            slide.ImageSize = "auto 100%";
+            slide.ImagePosition = "bottom";
+            slide.AnimationDuration = 2000;
+            slide.Animation1Delay = 3000;
+            slide.Animation1 = slide.SlideInFromRight;
+            slide.Animation2 = slide.SlideOutLeft;
+        
+            //Add the slide to the slideshow. 
+            slideshow.AddSlide(slide);
         }
-    ];
 
-    //Initiate the Slideshow. 
-    let slideshow = new Slideshow("mySlideshow");
+        //start the slideshow. 
+        slideshow.Start();  
 
-    slideshow.BackgroundColor = "#333";
-    slideshow.ShowControls = true;
-    slideshow.AnimationType = "Loop";
-
-    for (let i = 0; i < slides.length; i++) {
-        
-        //Create the Slide Object. 
-        let slide = new Slide();
-        
-        slide.Width = "100%";
-        slide.Height = "100%";
-        slide.TextContent = slides[i].Text;
-        slide.TextColor = "#fff";
-        slide.TextHolder.classList.add("dropshadow");
-        slide.TextHolder.style.margin = "0px";
-        slide.ImageUrl = slides[i].Image;
-        slide.ImageSize = "auto 100%";
-        slide.ImagePosition = "bottom";
-        slide.AnimationDuration = 2000;
-        slide.Animation1Delay = 3000;
-        slide.Animation1 = slide.SlideInFromRight;
-        slide.Animation2 = slide.SlideOutLeft;
-        
-        //Add the slide to the slideshow. 
-        slideshow.AddSlide(slide);
-    }
-
-    //start the slideshow. 
-    slideshow.Start();        
-
+      
+    &lt;/script&gt;
 
 </pre>
 </div>
@@ -163,6 +206,10 @@
                 Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
             },
             {
+                Text: "Friends!",
+                Image: "https://media.tenor.com/YGWwTOTIO4EAAAAC/friends.gif"
+            },
+            {
                 Text: "California",
                 Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
             },
@@ -199,6 +246,10 @@
                 Text: "Give 'em both barrels - Pew Pew Pew",
                 Image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gadsden_flag.svg"
             },
+            {
+                Text: "&quote;You're money's mine Green. You're fly is open Geller!&quote;",
+                Image: "https://media.tenor.com/ncqaaPOxlpYAAAAC/rachel-rachel-green.gif"
+            }
 
         ];
 
@@ -221,8 +272,8 @@
             slide.ImagePosition = "bottom";
             slide.AnimationDuration = 2000;
             slide.Animation1Delay = 3000;
-            slide.Animation1 = slide.SlideInFromRight;
-            slide.Animation2 = slide.SlideOutLeft;
+            slide.Animation1 = slide.FadeIn;
+            slide.Animation2 = slide.SlideOutRight;
             slideshow.AddSlide(slide);
         }
 
