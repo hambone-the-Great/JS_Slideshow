@@ -15,7 +15,8 @@ class Slideshow
     #currentSlide = null; 
     #currentStep = null; 
     #showControls = false; 
-    #backgroundColor = "#fff";      
+    #backgroundColor = "#fff";
+
 
     get Container(){
         return this.#container;
@@ -216,13 +217,13 @@ class Slideshow
 
         i++;
 
-        slide.Animation2Callback = function () {
+        slide.Animation2Callback = function () {            
             Slideshow.LoopSlideshow(slideshow, i); 
         };
 
         slide.Animation1();
 
-        slide.Delay = 0; 
+        slide.Animation1Complete = true;
         
     }
 
@@ -393,10 +394,13 @@ class Slide
     #width = "800px";
     #animation1 = null;
     #animation2 = null; 
-    #delay = 3000;
+    #animation1Delay = 3000;
+    #animation2Delay = 0; 
     #animationDuration = 2000;
     #animation1Callback = null;
     #animation2Callback = null;
+    #animation1Complete = false;
+    #animation2Complete = false;
 
     /* The Html Element */     
     get Element() { return this.#element; }
@@ -498,8 +502,16 @@ class Slide
     get Animation2Callback() { return this.#animation2Callback; }
     set Animation2Callback(v) { this.#animation2Callback = v; }
 
-    get Delay() { return this.#delay; }
-    set Delay(v) { this.#delay = v; }
+    get Animation1Delay() { return this.#animation1Delay; }
+    set Animation1Delay(v) { this.#animation1Delay = v; }
+
+    get Animation1Complete() { return this.#animation1Complete; }
+    set Animation1Complete(v) { this.#animation1Complete = v; }
+
+    get Animation2Complete() { return this.#animation2Complete; }
+    set Animation2Complete(v) { this.#animation2Complete = v; }
+
+
 
     /**
      * The Slide Constructor FUNction! 
@@ -571,16 +583,16 @@ class Slide
         
     //    switch (animation.toLowerCase()) {
     //        case "fadein":
-    //            this.#FadeIn(this.#animationDuration, this.#delay, callback);
+    //            this.#FadeIn(this.#animationDuration, this.#animation1Delay, callback);
     //            break;
     //        case "fadeout":
-    //            this.#FadeOut(this.#animationDuration, this.#delay, callback);
+    //            this.#FadeOut(this.#animationDuration, this.#animation1Delay, callback);
     //            break;
     //        case "slideleft":
-    //            this.#SlideLeft(this.#animationDuration, this.#delay, callback);
+    //            this.#SlideLeft(this.#animationDuration, this.#animation1Delay, callback);
     //            break;
     //        case "slideright":
-    //            this.#SlideRight(this.#animationDuration, this.#delay, callback);
+    //            this.#SlideRight(this.#animationDuration, this.#animation1Delay, callback);
     //            break; 
     //    }
 
@@ -599,7 +611,7 @@ class Slide
     #FadeIn() {
 
         if (!this.#animationDuration) this.#animationDuration = 2000;        
-        if (!this.#delay) this.#delay = 3000;
+        if (!this.#animation1Delay) this.#animation1Delay = 3000;
 
         let el = this.#element;
         el.style.opacity = 0;
@@ -615,8 +627,12 @@ class Slide
         let animation = new Animation(effect, document.timeline);
 
         let callback = this.#animation1Callback;
+        let delay = this.#animation1Delay;
 
-        let delay = this.#delay;
+        if (this.#animation1Complete) {
+            callback = this.#animation2Callback;
+            delay = this.#animation2Delay;
+        }
 
         animation.onfinish = function () {            
             el.style.display = "block";
@@ -634,7 +650,7 @@ class Slide
     #FadeOut() {        
         
         if (!this.#animationDuration) this.#animationDuration = 2000;
-        if (!this.#delay) this.#delay = 0; 
+        if (!this.#animation1Delay) this.#animation1Delay = 0; 
 
         let el = this.#element;
         el.style.opacity = 1;
@@ -649,9 +665,13 @@ class Slide
 
         let animation = new Animation(effect, document.timeline);
 
-        let callback = this.#animation2Callback;
+        let callback = this.#animation1Callback;
+        let delay = this.#animation1Delay;
 
-        let delay = this.#delay;
+        if (this.#animation1Complete) {
+            callback = this.#animation2Callback;
+            delay = this.#animation2Delay;
+        }
 
         animation.onfinish = function () {            
             el.style.display = "none";
@@ -682,7 +702,7 @@ class Slide
     #SlideLeft()
     {
         if (!this.#animationDuration) this.#animationDuration = 2000;
-        if (!this.#delay) this.#delay = 0;
+        if (!this.#animation1Delay) this.#animation1Delay = 0;
 
         let el = this.#element;
         el.style.opacity = 1; 
@@ -697,9 +717,14 @@ class Slide
 
         let animation = new Animation(effect, document.timeline);
 
-        let callback = this.#animation2Callback;
+        let callback = this.#animation1Callback;
+        let delay = this.#animation1Delay;
 
-        let delay = this.#delay;
+        if (this.#animation1Complete) {
+            callback = this.#animation2Callback;
+            delay = this.#animation2Delay;
+        }
+                
 
         animation.onfinish = function () {            
             el.style.display = "none";
@@ -717,7 +742,7 @@ class Slide
     #SlideRight()
     {
         if (!this.#animationDuration) this.#animationDuration = 2000;
-        if (!this.#delay) this.#delay = 0;
+        if (!this.#animation1Delay) this.#animation1Delay = 0;
 
         let el = this.#element;
         el.style.opacity = 1;
@@ -732,9 +757,13 @@ class Slide
 
         let animation = new Animation(effect, document.timeline);
 
-        let callback = this.#animation2Callback;
+        let callback = this.#animation1Callback;
+        let delay = this.#animation1Delay;
 
-        let delay = this.#delay; 
+        if (this.#animation1Complete) {
+            callback = this.#animation2Callback;
+            delay = this.#animation2Delay;
+        }
 
         animation.onfinish = function () {
             
