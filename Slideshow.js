@@ -216,11 +216,13 @@ class Slideshow
 
         i++;
 
-        slide.Animation1Callback = function () {
-            slideshow.LoopSlideshow(slideshow, i); 
+        slide.Animation2Callback = function () {
+            Slideshow.LoopSlideshow(slideshow, i); 
         };
 
         slide.Animation1();
+
+        slide.Delay = 0; 
         
     }
 
@@ -632,7 +634,7 @@ class Slide
     #FadeOut() {        
         
         if (!this.#animationDuration) this.#animationDuration = 2000;
-        if (!this.#delay) this.#delay = 500; 
+        if (!this.#delay) this.#delay = 0; 
 
         let el = this.#element;
         el.style.opacity = 1;
@@ -647,7 +649,7 @@ class Slide
 
         let animation = new Animation(effect, document.timeline);
 
-        let callback = this.#animation1Callback;
+        let callback = this.#animation2Callback;
 
         let delay = this.#delay;
 
@@ -680,28 +682,28 @@ class Slide
     #SlideLeft()
     {
         if (!this.#animationDuration) this.#animationDuration = 2000;
-        if (!this.#delay) this.#delay = 3000;
+        if (!this.#delay) this.#delay = 0;
 
         let el = this.#element;
         el.style.opacity = 1; 
-        el.classList.add("show");
+        el.style.display = "block";
 
         let frames = [
-            { right: el.style.right, position: "absolute" },
-            { right: "100%", position: "absolute" }
+            { right: "1%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" },
+            { right: "100%", position: "absolute", width: el.offsetWidth + "px", height: el.offsetHeight + "px" }
         ];
 
         let effect = new KeyframeEffect(el, frames, this.#animationDuration);
 
         let animation = new Animation(effect, document.timeline);
 
-
-        let callback = this.#animation1Callback;
+        let callback = this.#animation2Callback;
 
         let delay = this.#delay;
 
         animation.onfinish = function () {            
-            el.classList.remove("show");
+            el.style.display = "none";
+            el.style.opacity = 0; 
 
             if (callback) {
                 window.setTimeout(callback, delay);
@@ -715,7 +717,7 @@ class Slide
     #SlideRight()
     {
         if (!this.#animationDuration) this.#animationDuration = 2000;
-        if (!this.#delay) this.#delay = 3000;
+        if (!this.#delay) this.#delay = 0;
 
         let el = this.#element;
         el.style.opacity = 1;
@@ -730,7 +732,7 @@ class Slide
 
         let animation = new Animation(effect, document.timeline);
 
-        let callback = this.#animation1Callback;
+        let callback = this.#animation2Callback;
 
         let delay = this.#delay; 
 

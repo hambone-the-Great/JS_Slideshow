@@ -55,14 +55,15 @@
             for (let i = 0; i < slides.length; i++) {
 
                 let slide = new Slide();
-                slide.Width = "100%";                
+                slide.Width = "100%";
+                slide.Height = "100%";
                 slide.TextContent = slides[i].Text;
                 slide.ImageUrl = slides[i].Image;
-                slide.ImageSize = "contain";
+                slide.ImageSize = "auto 80%";
+                slide.ImagePosition = "bottom";
                 slide.AnimationDuration = 1000;
                 slide.Animation1 = slide.FadeIn;
-                slide.Animation2 = slide.SlideLeft;
-                slide.Animation1Callback = slide.Animation2;                
+                slide.Animation2 = slide.FadeOut;                            
                 slideshow.AddSlide(slide); 
             }
 
