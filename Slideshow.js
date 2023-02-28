@@ -297,7 +297,7 @@ class Slideshow
             this.#cancel = false; 
             target.classList.remove("play");
             target.classList.add("pause");
-            Slideshow.LoopSlideshow(this, ++this.#currentSlideIndex);
+            Slideshow.LoopSlideshow(this, this.#currentSlideIndex);
         }        
     }
 
