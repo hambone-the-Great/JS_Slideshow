@@ -58,12 +58,15 @@
                 slide.Width = "100%";
                 slide.Height = "100%";
                 slide.TextContent = slides[i].Text;
+                slide.TextColor = "#fff";
+                slide.TextHolder.classList.add("dropshadow");
                 slide.ImageUrl = slides[i].Image;
                 slide.ImageSize = "auto 80%";
                 slide.ImagePosition = "bottom";
-                slide.AnimationDuration = 3000;
+                slide.AnimationDuration = 1000;
+                slide.Animation1Delay = 1000;
                 slide.Animation1 = slide.FadeIn;
-                slide.Animation2 = slide.SlideOutRight;
+                slide.Animation2 = slide.FadeOut;
                 slideshow.AddSlide(slide); 
             }
 

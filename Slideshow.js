@@ -209,15 +209,18 @@ class Slideshow
 
         if (!i) i = 0; 
 
-        if (i >= slideshow.#slideCollection.length) i = 0;
+        if (i >= slideshow.SlideCollection.length) i = 0;
 
-        let slide = slideshow.#slideCollection[i];
-
-        slide.Animation1Callback = slide.Animation2;        
-
+        let slide = slideshow.SlideCollection[i];
+        slide.Animation1Complete = false;
+        slide.Animation1Callback = slide.Animation2;
+        
         i++;
 
-        slide.Animation2Callback = function () {            
+        slide.Animation2Callback = function () {
+            slide.Element.style.display = "none";
+            slide.Element.style.opacity = 0;
+            slide.TextHolder.style.margin = "0px";
             Slideshow.LoopSlideshow(slideshow, i); 
         };
 
@@ -225,8 +228,20 @@ class Slideshow
 
         slide.Animation1Complete = true;
 
-        slide.MoveText((slide.Element.offsetHeight * 0.8) + "px");
-        
+
+        let bigWidth = slide.Element.offsetWidth;
+        let txtWidth = slide.TextHolder.offsetWidth;
+        let leftPos = slide.TextHolder.offsetLeft + "px";
+        let leftMargin = ((bigWidth - txtWidth) / 2) - (txtWidth / 4) + "px";
+        let topMargin = slide.Element.offsetHeight * 0.8 + "px";
+
+        let top = { from: "0px", to: topMargin };
+        let left = { from: leftPos, to: leftMargin };
+        let size = { from: "0.1em", to: "5em" };
+        let easing = "ease-in-out"; 
+
+        slide.MoveText(top, left, size, easing);
+        slide.MoveImage("auto 80%", "auto 90%");
     }
 
 
@@ -487,7 +502,10 @@ class Slide
     set ImageSize(v) { this.#imageSize = v; } 
 
     get TextColor() { return this.#textColor; }
-    set TextColor(v) { this.#textColor = v; }
+    set TextColor(v) {
+        this.#textHolder.style.color = v; 
+        this.#textColor = v;
+    }
 
     get Animation1() { return this.#animation1; }
     set Animation1(v) { this.#animation1 = v; }
@@ -625,10 +643,10 @@ class Slide
         el.style.opacity = 0;
         el.style.display = "block";
 
-        let frames = [
-            { opacity: 0 },
-            { opacity: 1, display: "block" }
-        ];
+        let frames = {
+            opacity: [0, 1],
+            easing: "ease-in-out"
+        };
 
         let effect = new KeyframeEffect(el, frames, this.#animationDuration);         
 
@@ -664,10 +682,10 @@ class Slide
         el.style.opacity = 1;
         el.style.display = "block";
 
-        let frames = [
-            { opacity: 1 },
-            { opacity: 0, display: "none" }
-        ];
+        let frames = {
+            opacity: [1, 0],
+            easing: "ease-in-out"
+        };
 
         let effect = new KeyframeEffect(el, frames, this.#animationDuration);
 
@@ -884,25 +902,16 @@ class Slide
     }
 
 
-    MoveText() {
+    MoveText(top, left, size, _easing) {
        
         let el = this.#textHolder;
         el.style.position = "absolute";
-
-        let bigWidth = this.#element.offsetWidth;
-        let txtWidth = this.#textHolder.offsetWidth;
-        let leftPos = this.#textHolder.offsetLeft;
-        let leftMargin = (bigWidth - txtWidth) / 2; 
-
-        let top = this.#element.offsetHeight * 0.80 + "px"; 
-        let left = leftMargin + "px"
-        let size = "5em";        
-
+                
         let frames = {            
-            marginTop: ["0px", top,],
-            left: [leftPos+ "px", left],
-            fontSize: ["0.2em", size],            
-            easing: "ease-in-out"
+            marginTop: [top.from, top.to],
+            left: [left.from, left.to],
+            fontSize: [size.from, size.to],            
+            easing: _easing
         };
 
         let timing = {
@@ -915,14 +924,38 @@ class Slide
         let animation = new Animation(effect, document.timeline);
 
         animation.onfinish = function () {
-            el.style.marginTop = top;
-            el.style.left = left;
-            el.style.fontSize = size; 
+            el.style.marginTop = top.to;
+            el.style.left = left.to;
+            el.style.fontSize = size.to; 
+        }
+        animation.play();
+    }
+
+    MoveImage(from, to) {
+
+        let el = this.#element;
+
+        if (!from) start = "auto 80%";
+        if (!to) end = "auto 100%";
+
+        let frames = {            
+            backgroundSize: [from, to]
+        };
+
+        let timing = {
+            duration: this.#animationDuration,
+            iterations: 1
+        };
+
+        let effect = new KeyframeEffect(el, frames, timing);
+
+        let animation = new Animation(effect);
+
+        animation.onfinish = () => {
+            this.#element.style.backgroundSize = to; 
         }
 
         animation.play();
-
-
 
 
     }

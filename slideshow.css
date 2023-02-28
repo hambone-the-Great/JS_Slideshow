@@ -76,6 +76,10 @@
     background-color: #fff !important;
 }
 
+.slideshow .dropshadow {
+    text-shadow:2px 2px 4px #333;
+}
+
 .slideshowNavigation {
     display: block;
     position:absolute;
