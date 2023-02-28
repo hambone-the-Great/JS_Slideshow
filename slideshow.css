@@ -4,13 +4,13 @@
 }
 
 .slideshow {
-    width:100%;
+    width:99%;
     height:var(--slideshow-height);
     font-family: 'Open Sans', sans-serif !important;
     background-color:#fff;
     overflow:hidden;
     text-align: center;
-    margin:0;
+    margin:0 auto;
 }
 
 .slideshow .slide {
@@ -22,6 +22,7 @@
     height:var(--slideshow-height);
     white-space:normal;
     cursor:pointer;
+    overflow:hidden;    
 }
 
 .slideshow .slide > * {
@@ -119,3 +120,4 @@
     background-size:20px;
     background-position: center;
 }
+

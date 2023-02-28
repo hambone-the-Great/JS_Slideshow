@@ -61,21 +61,12 @@
                 slide.ImageUrl = slides[i].Image;
                 slide.ImageSize = "auto 80%";
                 slide.ImagePosition = "bottom";
-                slide.AnimationDuration = 1000;
+                slide.AnimationDuration = 3000;
                 slide.Animation1 = slide.FadeIn;
-                slide.Animation2 = slide.SlideLeft;                            
+                slide.Animation2 = slide.SlideOutRight;
                 slideshow.AddSlide(slide); 
             }
 
-            //let slide1 = slideshow.SlideCollection[0];
-
-            //slide1.Animate("fadein", slide1.FadeOut);
-
-            //slide1.Animation1Callback = slide1.FadeOut; 
-
-            //Slide.FadeInSlide(slide1); 
-
-            //slide1.Animate("SlideLeft");
                        
 
             Slideshow.LoopSlideshow(slideshow, 0); 
