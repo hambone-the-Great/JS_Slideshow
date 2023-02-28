@@ -1,112 +1,232 @@
 <!DOCTYPE html>
 <html>
-    <head>
-
-        <script src="Slideshow.js"></script>
-        <link href="slideshow.css" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-        <h1>Welcome to JS Slideshow</h1>
-        <p>JS Slideshow is a simple and lightweight Javascript Slideshow.</p>   
-        <p>Here is an example of JS Slideshow:</p>
-
-        <div id="mySlideshow" class="slideshow"></div>
-
-        <script>            
-
-            let slides = [
-                {
-                    Text: "North Dakota",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
-                },
-                {
-                    Text: "Minnesota",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
-                },
-                {
-                    Text: "California",
-                    Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
-                },
-                //{
-                //    Text: "Arizona",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arizona.svg"
-                //},
-                //{
-                //    Text: "Colorado",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg"
-                //},
-
-                //{
-                //    Text: "South Carolina",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg"
-                //},
-                //{
-                //    Text: "Wyoming",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Wyoming.svg"
-                //},
-                //{
-                //    Text: "Texas",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg"
-                //},
-                //{
-                //    Text: "Florida",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg"
-                //},
-                //{
-                //    Text: "New Hampshire",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_New_Hampshire.svg"
-                //},
-                //{
-                //    Text: "Pew Pew Pew",
-                //    Image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gadsden_flag.svg"
-                //},
-
-            ];
-
-            let slideshow = new Slideshow("mySlideshow");
-            slideshow.BackgroundColor = "#333";
-            slideshow.ShowControls = true; 
-            slideshow.AnimationType = "Loop"; 
-            for (let i = 0; i < slides.length; i++) {
-
-                preloadImage(slides[i].Image);
-
-                let slide = new Slide();               
-                slide.Width = "100%";
-                slide.Height = "100%";
-                slide.TextContent = slides[i].Text;
-                slide.TextColor = "#fff";
-                slide.TextHolder.classList.add("dropshadow");
-                slide.TextHolder.style.margin = "0px";
-                slide.ImageUrl = slides[i].Image;
-                slide.ImageSize = "auto 100%";
-                slide.ImagePosition = "bottom";
-                slide.AnimationDuration = 1000;
-                slide.Animation1Delay = 1000;
-                slide.Animation1 = slide.FadeIn;
-                slide.Animation2 = slide.FadeOut;
-                slideshow.AddSlide(slide); 
-            }
-
-                      
-            slideshow.Start();
-
-            //does this really do anything? found it on stackoverflow....sus, very sus. 
-            function preloadImage(url) {
-
-                let list = [];
-                let img = new Image();
-                img.onload = function () {
-                    list.push(img); 
-                }
-                img.src = url;
-                
-                list.pop(img);                
-            }
+<head>
 
 
-        </script>
+    <link href="slideshow.css" rel="stylesheet" type="text/css" />    
+    <script src="Slideshow.js"></script>
 
-    </body>
+    <style>
+
+        html, body {
+            font-family: 'Open Sans', sans-serif;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight:bold;
+            line-height:1em; 
+            margin:0.5em auto; 
+        }
+
+        h1 { font-size:3em; }
+        h2 { font-size:2.5em; }
+        h3 { font-size:2em; }
+        h4 { font-size:1.5em; }
+        h5 { font-size:1em; }
+        h6 { font-size:0.75em; }
+
+        p, span, a, li {
+            font-size:1.2em;
+            line-height:1em;
+            margin:0.5em auto;
+        }
+
+        .container {
+            text-align:left;
+            margin:0.5em auto;
+            width:90%;
+        }
+
+        pre {
+            background-color:#333;
+            color:yellow;
+            font-size:18px;
+            border-radius:8px;             
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1>Schuff Software Company's JS Slideshow</h1>
+    <p>JS Slideshow is a simple and lightweight Slideshow that uses vanilla Javascript.</p>
+    <p>Here is an example of JS Slideshow:</p>
+
+    <div id="mySlideshow" class="slideshow"></div>
+
+
+    <div class="container">
+
+        <p>View this project on GitHub: <a href="https://github.com/hambone-the-Great/JS_Slideshow">https://github.com/hambone-the-Great/JS_Slideshow</a></p>
+
+    </div>
+<div class="container">
+
+<h3>Here is a code example:</h3>
+<pre>        
+
+    let slides = [
+        {
+            Text: "North Dakota",
+            Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
+        },
+        {
+            Text: "Minnesota",
+            Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
+        },
+        {
+            Text: "California",
+            Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
+        }
+    ];
+
+    //Initiate the Slideshow. 
+    let slideshow = new Slideshow("mySlideshow");
+
+    slideshow.BackgroundColor = "#333";
+    slideshow.ShowControls = true;
+    slideshow.AnimationType = "Loop";
+
+    for (let i = 0; i < slides.length; i++) {
+        
+        //Create the Slide Object. 
+        let slide = new Slide();
+        
+        slide.Width = "100%";
+        slide.Height = "100%";
+        slide.TextContent = slides[i].Text;
+        slide.TextColor = "#fff";
+        slide.TextHolder.classList.add("dropshadow");
+        slide.TextHolder.style.margin = "0px";
+        slide.ImageUrl = slides[i].Image;
+        slide.ImageSize = "auto 100%";
+        slide.ImagePosition = "bottom";
+        slide.AnimationDuration = 2000;
+        slide.Animation1Delay = 3000;
+        slide.Animation1 = slide.SlideInFromRight;
+        slide.Animation2 = slide.SlideOutLeft;
+        
+        //Add the slide to the slideshow. 
+        slideshow.AddSlide(slide);
+    }
+
+    //start the slideshow. 
+    slideshow.Start();        
+</pre>
+</div>
+
+
+
+
+
+    <div class="container">
+        <p>Copyright (c) 2023 Marcus Schuff (aka Hambone The Great) dba Schuff Software Company</p>
+
+        <p>
+            Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:
+        </p>
+        <p>
+            The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.
+        </p>
+        <p>
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.
+        </p>
+    </div>
+
+    <script>
+
+        let slides = [
+            {
+                Text: "North Dakota",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
+            },
+            {
+                Text: "Minnesota",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
+            },
+            {
+                Text: "California",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
+            },
+            {
+                Text: "Arizona",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arizona.svg"
+            },
+            {
+                Text: "Colorado",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg"
+            },
+
+            {
+                Text: "South Carolina",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg"
+            },
+            {
+                Text: "Wyoming",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Wyoming.svg"
+            },
+            {
+                Text: "Texas",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg"
+            },
+            {
+                Text: "Florida",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg"
+            },
+            {
+                Text: "New Hampshire",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_New_Hampshire.svg"
+            },
+            {
+                Text: "Give 'em both barrels - Pew Pew Pew",
+                Image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gadsden_flag.svg"
+            },
+
+        ];
+
+        let slideshow = new Slideshow("mySlideshow");
+        slideshow.BackgroundColor = "#333";
+        slideshow.ShowControls = true;
+        slideshow.AnimationType = "Loop";
+
+        for (let i = 0; i < slides.length; i++) {
+
+            let slide = new Slide();
+            slide.Width = "100%";
+            slide.Height = "100%";
+            slide.TextContent = slides[i].Text;
+            slide.TextColor = "#fff";
+            slide.TextHolder.classList.add("dropshadow");
+            slide.TextHolder.style.margin = "0px";
+            slide.ImageUrl = slides[i].Image;
+            slide.ImageSize = "auto 100%";
+            slide.ImagePosition = "bottom";
+            slide.AnimationDuration = 2000;
+            slide.Animation1Delay = 3000;
+            slide.Animation1 = slide.SlideInFromRight;
+            slide.Animation2 = slide.SlideOutLeft;
+            slideshow.AddSlide(slide);
+        }
+
+        slideshow.Start();
+
+
+    </script>
+
+</body>
 </html>
 

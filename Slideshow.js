@@ -791,7 +791,7 @@ class Slide
         }
 
         document.body.style.width = document.body.offsetWidth + "px";
-        document.body.style.overflow = "hidden";
+        document.body.style.overflowX = "hidden";
 
         animation.onfinish = function () {            
             el.style.display = "none";
@@ -845,7 +845,7 @@ class Slide
         }
 
         document.body.style.width = document.body.offsetWidth + "px";
-        document.body.style.overflow = "hidden";
+        document.body.style.overflowX = "hidden";
 
         animation.onfinish = function () {                        
             el.style.display = "none";
@@ -913,7 +913,7 @@ class Slide
         }
 
         document.body.style.width = document.body.offsetWidth + "px";
-        document.body.style.overflow = "hidden";
+        document.body.style.overflowX = "hidden";
 
         animation.onfinish = function () {
             el.style.display = "block";
@@ -972,7 +972,7 @@ class Slide
         }
 
         document.body.style.width = document.body.offsetWidth + "px"; 
-        document.body.style.overflow = "hidden"; 
+        document.body.style.overflowX = "hidden";
 
         animation.onfinish = function () {
             el.style.display = "block";
