@@ -97,11 +97,11 @@ class Slideshow
         this.#currentStep = v; 
     }
 
-    get CurrentSlide(){
+    get CurrentSlideIndex(){
         return this.#currentSlide;
     }
 
-    set CurrentSlide(v){
+    set CurrentSlideIndex(v){
         this.#currentSlide = v;
     }
 
@@ -193,17 +193,19 @@ class Slideshow
 
         if (this.#backgroundColor){
             this.#container.style.backgroundColor = this.#backgroundColor;
-        }        
-
-        switch (this.#animationType.toLowerCase())
-        {
-            case "fade":  
-                this.FadeIn(0, this.#startingSlide);
-                break;
-            case "slide":
-                this.SlideLeft(0, this.#startingSlide);
-                break;
         }
+
+        Slideshow.LoopSlideshow(this, 0); 
+
+        //switch (this.#animationType.toLowerCase())
+        //{
+        //    case "fade":  
+        //        this.FadeIn(0, this.#startingSlide);
+        //        break;
+        //    case "slide":
+        //        this.SlideLeft(0, this.#startingSlide);
+        //        break;
+        //}
     }
 
     static LoopSlideshow(slideshow, i) {        
@@ -213,6 +215,9 @@ class Slideshow
         if (i >= slideshow.SlideCollection.length) i = 0;
 
         let slide = slideshow.SlideCollection[i];
+
+        slideshow.CurrentSlide = slide;
+
         slide.Animation1Complete = false;
         slide.Animation1Callback = slide.Animation2;
         
@@ -273,7 +278,7 @@ class Slideshow
         if (target.dataset.toggle == "playing") 
         {
             target.dataset.toggle = "paused"; 
-            this.#cancel = true; 
+            //this.#cancel = true; 
             target.classList.remove("pause");
             target.classList.add("play");
 
@@ -281,10 +286,10 @@ class Slideshow
         else 
         {
             target.dataset.toggle = "playing"; 
-            this.#cancel = false; 
+            //this.#cancel = false; 
             target.classList.remove("play");
             target.classList.add("pause");
-            this.FadeIn(this.#currentStep, this.#currentSlide);
+            //this.FadeIn(this.#currentStep, this.#currentSlide);
         }        
     }
 

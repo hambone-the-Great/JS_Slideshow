@@ -65,6 +65,8 @@
 
             let slideshow = new Slideshow("mySlideshow");
             slideshow.BackgroundColor = "#333";
+            slideshow.ShowControls = true; 
+
             for (let i = 0; i < slides.length; i++) {
 
                 preloadImage(slides[i].Image);
@@ -80,16 +82,16 @@
                 slide.ImagePosition = "bottom";
                 slide.AnimationDuration = 1000;
                 slide.Animation1Delay = 1000;
-                slide.Animation1 = slide.SlideInFromLeft;
-                slide.Animation2 = slide.SlideOutRight;
+                slide.Animation1 = slide.FadeIn;
+                slide.Animation2 = slide.FadeOut;
                 slideshow.AddSlide(slide); 
             }
 
                        
 
-            Slideshow.LoopSlideshow(slideshow, 0); 
+            slideshow.Start();
 
-
+            //does this really do anything? found it on stackoverflow....sus, very sus. 
             function preloadImage(url) {
 
                 let list = [];
