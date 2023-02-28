@@ -10,12 +10,12 @@ class Slideshow
     #pauseDuration = 5000;
     #animationType = "fade"; 
     #moveImages = true;
-    #SlideCollection = [];
+    #slideCollection = [];
     #cancel = false; 
     #currentSlide = null; 
     #currentStep = null; 
     #showControls = false; 
-    #backgroundColor = "#fff"; 
+    #backgroundColor = "#fff";      
 
     get Container(){
         return this.#container;
@@ -73,11 +73,11 @@ class Slideshow
     }
 
     get SlideCollection() {
-        return this.#SlideCollection;
+        return this.#slideCollection;
     }
 
     set SlideCollection(v) {
-        this.#SlideCollection = v; 
+        this.#slideCollection = v; 
     }
 
     get Cancel(){
@@ -120,6 +120,8 @@ class Slideshow
         this.#backgroundColor = v; 
     }
 
+
+
    
     /**
      * The slideshow constructor! :-) Woot! 
@@ -141,7 +143,7 @@ class Slideshow
         {
             let slide = new Slide(); 
             slide.Element = this.#slideElements[i]; 
-            this.#SlideCollection.push(slide);             
+            this.#slideCollection.push(slide);             
         }
 
         
@@ -161,7 +163,7 @@ class Slideshow
         slide.Element.style.backgroundSize = slide.ImageSize;
         slide.Element.style.width = slide.Width;
         slide.Element.style.height = slide.Height; 
-        this.#SlideCollection.push(slide); 
+        this.#slideCollection.push(slide); 
     }
 
     /**
@@ -201,6 +203,27 @@ class Slideshow
                 break;
         }
     }
+
+    static LoopSlideshow(slideshow, i) {        
+
+        if (!i) i = 0; 
+
+        if (i >= slideshow.#slideCollection.length) i = 0;
+
+        let slide = slideshow.#slideCollection[i];
+
+        slide.Animation1Callback = slide.Animation2;
+
+        i++;
+
+        slide.Animation1Callback = function () {
+            slideshow.LoopSlideshow(slideshow, i); 
+        };
+
+        slide.Animation1();
+        
+    }
+
 
     /**
      * Create the play/pause button for the slideshow. 
@@ -366,7 +389,12 @@ class Slide
     #imageSize = "cover";     
     #height = "300px";
     #width = "800px";
-    #callback = null; 
+    #animation1 = null;
+    #animation2 = null; 
+    #delay = 3000;
+    #animationDuration = 2000;
+    #animation1Callback = null;
+    #animation2Callback = null;
 
     /* The Html Element */     
     get Element() { return this.#element; }
@@ -451,11 +479,25 @@ class Slide
     set ImageSize(v) { this.#imageSize = v; } 
 
     get TextColor() { return this.#textColor; }
-    set TextColor(v){ this.#textColor = v; }
+    set TextColor(v) { this.#textColor = v; }
 
-    get Callback() { return this.#callback; }
-    set Callback(v) { this.#callback = v; }
+    get Animation1() { return this.#animation1; }
+    set Animation1(v) { this.#animation1 = v; }
 
+    get Animation2() { return this.#animation2; }
+    set Animation2(v) { this.#animation2 = v; }
+
+    get AnimationDuration() { return this.#animationDuration; }
+    set AnimationDuration(v) { this.#animationDuration = v; }
+
+    get Animation1Callback() { return this.#animation1Callback; }
+    set Animation1Callback(v) { this.#animation1Callback = v; }
+
+    get Animation2Callback() { return this.#animation2Callback; }
+    set Animation2Callback(v) { this.#animation2Callback = v; }
+
+    get Delay() { return this.#delay; }
+    set Delay(v) { this.#delay = v; }
 
     /**
      * The Slide Constructor FUNction! 
@@ -466,6 +508,7 @@ class Slide
      * @param {*} size //The CSS image size of the slide (optional).
      * @param {*} href //The link of the page to navigate to when the slide is clicked (optional). 
      * @param {*} txtColor //The color of the text content of the slide (optional). 
+     * @param {*} dimensions // object containing css-like height and width values. 
      */
     constructor(src, content, css, pos, size, href, txtColor, dimensions)
     {
@@ -517,37 +560,196 @@ class Slide
             this.Width = dimensions.width;
             this.Height = dimensions.height;
         }
-        
+
+        this.#element.classList.add("slide");
         this.#element.appendChild(this.#textHolder);
     }
 
-
-    FadeOut() 
-    {        
-
-    }
-
-
-    FadeIn()
-    {
-
-    }
-
-
-    MoveText(i, t, r, b, l) 
-    {
+    //Animate(animation, callback) {
         
+    //    switch (animation.toLowerCase()) {
+    //        case "fadein":
+    //            this.#FadeIn(this.#animationDuration, this.#delay, callback);
+    //            break;
+    //        case "fadeout":
+    //            this.#FadeOut(this.#animationDuration, this.#delay, callback);
+    //            break;
+    //        case "slideleft":
+    //            this.#SlideLeft(this.#animationDuration, this.#delay, callback);
+    //            break;
+    //        case "slideright":
+    //            this.#SlideRight(this.#animationDuration, this.#delay, callback);
+    //            break; 
+    //    }
+
+    //}
+
+
+    FadeIn = (sender) => {
+        this.#FadeIn();
     }
 
-    SlideLeft(d)
+    FadeOut = (sender) => {
+        this.#FadeOut();
+    }
+
+
+    #FadeIn() {
+
+        if (!this.#animationDuration) this.#animationDuration = 2000;        
+        if (!this.#delay) this.#delay = 3000;
+
+        let el = this.#element;
+        el.style.opacity = 0;
+        el.style.display = "block";
+
+        let frames = [
+            { opacity: 0 },
+            { opacity: 1, display: "block" }
+        ];
+
+        let effect = new KeyframeEffect(el, frames, this.#animationDuration);         
+
+        let animation = new Animation(effect, document.timeline);
+
+        let callback = this.#animation1Callback;
+
+        let delay = this.#delay;
+
+        animation.onfinish = function () {            
+            el.style.display = "block";
+            el.style.opacity = 1; 
+
+            if (callback) {
+                window.setTimeout(callback, delay);
+            }
+        };
+
+        animation.play();
+
+    }
+
+    #FadeOut() {        
+        
+        if (!this.#animationDuration) this.#animationDuration = 2000;
+        if (!this.#delay) this.#delay = 500; 
+
+        let el = this.#element;
+        el.style.opacity = 1;
+        el.style.display = "block";
+
+        let frames = [
+            { opacity: 1 },
+            { opacity: 0, display: "none" }
+        ];
+
+        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+
+        let animation = new Animation(effect, document.timeline);
+
+        let callback = this.#animation1Callback;
+
+        let delay = this.#delay;
+
+        animation.onfinish = function () {            
+            el.style.display = "none";
+            el.style.opacity = 0;
+           
+
+            if (callback) {
+                window.setTimeout(callback, delay);
+            }
+          
+        };
+
+        animation.play();
+
+    }
+
+       
+
+    SlideLeft = (sender) => {
+        this.#SlideLeft();
+    }
+
+    SlideRight = (sender) => {
+        this.#SlideRight();
+    }
+
+
+    #SlideLeft()
     {
+        if (!this.#animationDuration) this.#animationDuration = 2000;
+        if (!this.#delay) this.#delay = 3000;
+
+        let el = this.#element;
+        el.style.opacity = 1; 
+        el.classList.add("show");
+
+        let frames = [
+            { right: el.style.right, position: "absolute" },
+            { right: "100%", position: "absolute" }
+        ];
+
+        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+
+        let animation = new Animation(effect, document.timeline);
+
+
+        let callback = this.#animation1Callback;
+
+        let delay = this.#delay;
+
+        animation.onfinish = function () {            
+            el.classList.remove("show");
+
+            if (callback) {
+                window.setTimeout(callback, delay);
+            }
+        };
+
+        animation.play();
 
     }
 
-    SlideRight(d)
+    #SlideRight()
     {
+        if (!this.#animationDuration) this.#animationDuration = 2000;
+        if (!this.#delay) this.#delay = 3000;
+
+        let el = this.#element;
+        el.style.opacity = 1;
+        el.classList.add("show");
+
+        let frames = [
+            { left: el.style.left, position: "absolute" },
+            { left: "100%", position: "absolute" }
+        ];
+
+        let effect = new KeyframeEffect(el, frames, this.#animationDuration);
+
+        let animation = new Animation(effect, document.timeline);
+
+        let callback = this.#animation1Callback;
+
+        let delay = this.#delay; 
+
+        animation.onfinish = function () {
+            
+            el.classList.remove("show");
+
+            if (callback) {
+                window.setTimeout(callback, delay);
+            }
+
+        };
+
+        animation.play();
+    }
+
+    MoveText(i, t, r, b, l) {
 
     }
 
-    
+
 }

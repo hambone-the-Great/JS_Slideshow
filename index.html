@@ -12,29 +12,73 @@
 
         <div id="mySlideshow" class="slideshow"></div>
 
-        <script>
+        <script>            
+
+            let slides = [
+                {
+                    Text: "California",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg"
+                },
+                {
+                    Text: "Minnesota",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg"
+                },
+                {
+                    Text: "Arizona",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arizona.svg"
+                },
+                {
+                    Text: "Colorado",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg"
+                },
+                {
+                    Text: "North Dakota",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg"
+                },
+                {
+                    Text: "South Carolina",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg"
+                },
+                {
+                    Text: "Wyoming",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Wyoming.svg"
+                },
+                {
+                    Text: "Texas",
+                    Image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg"
+                },
+
+            ];
 
             let slideshow = new Slideshow("mySlideshow");
 
-            let slide1 = new Slide();
-            slide1.TextContent = "Hello World"; 
-            slide1.ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg";
-            slide1.ImageSize = "contain";
-            slide1.Width = "100%";
-            slide1.Height = "550px";            
-            slideshow.AddSlide(slide1);
+            for (let i = 0; i < slides.length; i++) {
 
-            let slide2 = new Slide();
-            slide2.TextContent = "Bitch Please!";
-            slide2.ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg";
-            slide2.ImageSize = "contain";
-            slide2.Width = "100%";
-            slide2.Height = "550px";
-            slideshow.AddSlide(slide2);
+                let slide = new Slide();
+                slide.Width = "100%";                
+                slide.TextContent = slides[i].Text;
+                slide.ImageUrl = slides[i].Image;
+                slide.ImageSize = "contain";
+                slide.AnimationDuration = 1000;
+                slide.Animation1 = slide.FadeIn;
+                slide.Animation2 = slide.SlideLeft;
+                slide.Animation1Callback = slide.Animation2;                
+                slideshow.AddSlide(slide); 
+            }
 
-            slide1.FadeIn();
+            //let slide1 = slideshow.SlideCollection[0];
 
-            /*slideshow.Start();*/
+            //slide1.Animate("fadein", slide1.FadeOut);
+
+            //slide1.Animation1Callback = slide1.FadeOut; 
+
+            //Slide.FadeInSlide(slide1); 
+
+            //slide1.Animate("SlideLeft");
+                       
+
+            Slideshow.LoopSlideshow(slideshow, 0); 
+
 
 
         </script>
