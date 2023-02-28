@@ -195,17 +195,20 @@ class Slideshow
             this.#container.style.backgroundColor = this.#backgroundColor;
         }
 
-        Slideshow.LoopSlideshow(this, 0); 
+        
 
-        //switch (this.#animationType.toLowerCase())
-        //{
-        //    case "fade":  
-        //        this.FadeIn(0, this.#startingSlide);
-        //        break;
-        //    case "slide":
-        //        this.SlideLeft(0, this.#startingSlide);
-        //        break;
-        //}
+        switch (this.#animationType.toLowerCase())
+        {
+            case "fade":  
+                this.FadeIn(0, this.#startingSlide);
+                break;
+            case "slide":
+                this.SlideLeft(0, this.#startingSlide);
+                break;
+            case "loop":
+                Slideshow.LoopSlideshow(this, 0);
+                break;
+        }
     }
 
     static LoopSlideshow(slideshow, i) {        
