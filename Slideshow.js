@@ -704,6 +704,23 @@ class Slide
         return this.#FadeOut();
     }
 
+    SlideOutLeft = (sender) => {
+        return this.#SlideOutLeft();
+    }
+
+    SlideOutRight = (sender) => {
+        return this.#SlideOutRight();
+    }
+
+    SlideInFromRight = (sender) => {
+        return this.#SlideInFromRight();
+    }
+
+    SlideInFromLeft = (sender) => {
+        return this.#SlideInFromLeft();
+    }
+
+
 
     #FadeIn() {
 
@@ -795,13 +812,6 @@ class Slide
 
        
 
-    SlideOutLeft = (sender) => {
-        return this.#SlideOutLeft();
-    }
-
-    SlideOutRight = (sender) => {
-        return this.#SlideOutRight();
-    }
 
 
     #SlideOutLeft()
@@ -919,13 +929,7 @@ class Slide
         return animation;
     }
 
-    SlideInFromRight = (sender) => {
-        return this.#SlideInFromRight();
-    }
 
-    SlideInFromLeft = (sender) => {
-        return this.#SlideInFromLeft();
-    }
 
     #SlideInFromLeft() {
         if (!this.#animationDuration) this.#animationDuration = 2000;
