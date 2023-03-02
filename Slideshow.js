@@ -266,15 +266,15 @@ class Slideshow
 
             slide.Element.style.display = "none";
             slide.Element.style.opacity = 0;
-            slide.TextHolder.style.margin = "0px auto";
-            slide.TextHolder.style.fontSize = "3em";
+            //slide.TextHolder.style.margin = "0px auto";
+            //slide.TextHolder.style.fontSize = "3em";
 
             Slideshow.LoopSlideshow(slideshow, ++i);
         };
 
        
         let bigWidth = slide.Element.offsetWidth;
-        let txtWidth = slide.TextHolder.offsetWidth;        
+        /*let txtWidth = slide.TextHolder.offsetWidth;        */
         let leftMargin = ((bigWidth - txtWidth) / 2.885);
         let topMargin = slide.Element.offsetHeight * 0.7 + "px";
 
@@ -612,8 +612,8 @@ class Slide
     constructor(src, content, css, pos, size, href, txtColor, dimensions)
     {
         
-        if (!this.#element) this.#element = document.createElement("div");        
-        if (!this.#textHolder) this.#textHolder = document.createElement("span");
+        this.#element = document.createElement("div");        
+        this.#textHolder = document.createElement("span");
             
         if (content) {
             this.#textContent = content;    
