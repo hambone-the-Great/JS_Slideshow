@@ -624,9 +624,9 @@ class Slide
     constructor(src, content, css, pos, size, href, txtColor, dimensions)
     {
         
-        this.#element = document.createElement("div");        
-        this.#textHolder = document.createElement("span");
-
+        if (!this.#element) this.#element = document.createElement("div");        
+        if (!this.#textHolder) this.#textHolder = document.createElement("span");
+            
         if (content) {
             this.#textContent = content;    
             this.#textHolder.innerHTML = content;                                  
