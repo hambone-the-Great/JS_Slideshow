@@ -240,18 +240,6 @@ class Slideshow
 
         Slideshow.LoopSlideshow(this, startPos);
 
-        //switch (this.#animationType.toLowerCase())
-        //{
-        //    case "fade":  
-        //        this.FadeIn(0, this.#startingSlide);
-        //        break;
-        //    case "slide":
-        //        this.SlideLeft(0, this.#startingSlide);
-        //        break;
-        //    case "loop":
-        //        Slideshow.LoopSlideshow(this, 0);
-        //        break;
-        //}
     }
 
     static LoopSlideshow(slideshow, i) {        
@@ -517,7 +505,7 @@ class Slide
     }
     set ImageUrl(v)
     {
-        this.#element.style.backgroundImage = v; 
+        this.#element.style.background = v;
         this.#imageUrl = v;
     }
 
@@ -659,7 +647,7 @@ class Slide
         }     
                 
         if (src) { 
-            this.ImageUrl = src;                                     
+            this.#imageUrl = src;                                     
         }
 
         if (href) {
