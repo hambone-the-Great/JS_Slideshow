@@ -13,7 +13,7 @@ class Slideshow
     #slideCollection = [];
     #cancel = false; 
     #currentSlideIndex = null; 
-    #currentStep = null; 
+    /*#currentStep = null; */
     #showControls = false; 
     #backgroundColor = "#fff";
 
@@ -89,13 +89,13 @@ class Slideshow
         this.#cancel = v; 
     }
 
-    get CurrentStep(){
-        return this.#currentStep;
-    }
+    //get CurrentStep(){
+    //    return this.#currentStep;
+    //}
 
-    set CurrentStep(v){
-        this.#currentStep = v; 
-    }
+    //set CurrentStep(v){
+    //    this.#currentStep = v; 
+    //}
 
     get CurrentSlideIndex(){
         return this.#currentSlideIndex;
@@ -247,6 +247,11 @@ class Slideshow
         if (!i) i = 0; 
 
         if (i >= slideshow.SlideCollection.length) i = 0;
+
+        if (slideshow.Cancel) {
+            slideshow.CurrentSlideIndex = i;
+            return;
+        }
         
         let slide = slideshow.SlideCollection[i];
 
@@ -256,7 +261,7 @@ class Slideshow
         slide.Animation1Callback = slide.Animation2;
         slide.Element.style.display = "block";
         slide.Element.style.opacity = 1;
-        //slide.TextHolder.style.margin = "0px auto";
+        slide.TextHolder.style.margin = "0px auto";
         
         slide.Animation1();
 
@@ -266,20 +271,21 @@ class Slideshow
 
             slide.Element.style.display = "none";
             slide.Element.style.opacity = 0;
-            //slide.TextHolder.style.margin = "0px auto";
-            //slide.TextHolder.style.fontSize = "3em";
+            slide.TextHolder.style.margin = "0px auto";
+            slide.TextHolder.style.fontSize = "3em";
 
             Slideshow.LoopSlideshow(slideshow, ++i);
         };
 
        
-        let bigWidth = slide.Element.offsetWidth;
-        /*let txtWidth = slide.TextHolder.offsetWidth;        */
-        let leftMargin = ((bigWidth - txtWidth) / 2.885);
-        let topMargin = slide.Element.offsetHeight * 0.7 + "px";
+        let max = 400;
+        let min = 1;        
 
-        let top = { from: "0px", to: topMargin };
-        let left = { from: leftMargin + "px", to: leftMargin + "px" };
+        let start = Math.floor(Math.random() * (max - min) + min);
+        let end = Math.floor(Math.random() * (max - min) + min);
+
+        let top = { from: start + "px", to: end + "px"};
+        let left = { from: start + "px", to: end + "px" };
         let size = { from: "0.1em", to: "3em" };
         let easing = "ease-in-out"; 
 
@@ -1056,8 +1062,6 @@ class Slide
         let frames = {            
             marginTop: [top.from, top.to],
             fontSize: [size.from, size.to],
-            left: [left.from, left.to],
-            easing: _easing
         };
 
         let timing = {
@@ -1070,10 +1074,8 @@ class Slide
         let animation = new Animation(effect, document.timeline);
 
         animation.onfinish = function () {
-            el.style.marginTop = top.to;            
-            el.style.fontSize = size.to;
-            el.style.left = (el.parentNode.offsetWidth - el.offsetWidth) / 2 + "px";
-
+            el.style.marginTop = top.to;
+            el.style.fontSize = size.to;            
         }
 
         animation.play();
