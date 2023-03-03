@@ -277,12 +277,12 @@ class Slideshow
             Slideshow.LoopSlideshow(slideshow, ++i);
         };
 
-        let sMax = 100;
+        let sMax = slideshow.Container.offsetHeight * 0.5; 
         let sMin = 1;
 
         let start = Math.floor(Math.random() * (sMax - sMin) + sMin);
 
-        let eMax = 300;
+        let eMax = slideshow.Container.offsetHeight * 0.5;
         let eMin = 1;
                 
         let end = Math.floor(Math.random() * (eMax - eMin) + eMin);
@@ -294,7 +294,7 @@ class Slideshow
         let easing = "ease-in-out"; 
 
         slide.MoveText(top, left, size, easing);
-        slide.MoveImage("auto 10%", "auto 100%");
+        //slide.MoveImage("10% auto", "100% auto");
 
     }
 
