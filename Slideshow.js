@@ -269,10 +269,12 @@ class Slideshow
 
         slide.Animation2Callback = function () {
 
-            slide.Element.style.display = "none";
-            slide.Element.style.opacity = 0;
-            slide.TextHolder.style.margin = "0px auto";
-            slide.TextHolder.style.fontSize = "3em";
+            if (slide.Element && slide.TextHolder) {
+                slide.Element.style.display = "none";
+                slide.Element.style.opacity = 0;
+                slide.TextHolder.style.margin = "0px auto";
+                slide.TextHolder.style.fontSize = "3em";
+            }
 
             Slideshow.LoopSlideshow(slideshow, ++i);
         };
