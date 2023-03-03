@@ -261,7 +261,7 @@ class Slideshow
         slide.Animation1Callback = slide.Animation2;
         slide.Element.style.display = "block";
         slide.Element.style.opacity = 1;
-        slide.TextHolder.style.margin = "0px auto";
+        if (slide.TextHolder) slide.TextHolder.style.margin = "0px auto";
         
         slide.Animation1();
 
