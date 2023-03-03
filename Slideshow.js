@@ -249,7 +249,7 @@ class Slideshow
         if (i >= slideshow.SlideCollection.length) i = 0;
 
         if (slideshow.Cancel) {
-            slideshow.CurrentSlideIndex = i;
+            slideshow.CurrentSlideIndex = ++i;
             return;
         }
         
@@ -276,6 +276,7 @@ class Slideshow
 
             Slideshow.LoopSlideshow(slideshow, ++i);
         };
+
 
     }
 
