@@ -277,12 +277,16 @@ class Slideshow
             Slideshow.LoopSlideshow(slideshow, ++i);
         };
 
-       
-        let max = 300;
-        let min = 1;        
+        let sMax = 100;
+        let sMin = 1;
 
-        let start = Math.floor(Math.random() * (max - min) + min);
-        let end = Math.floor(Math.random() * (max - min) + min);
+        let start = Math.floor(Math.random() * (sMax - sMin) + sMin);
+
+        let eMax = 300;
+        let eMin = 1;
+                
+        let end = Math.floor(Math.random() * (eMax - eMin) + eMin);
+
 
         let top = { from: start + "px", to: end + "px"};
         let left = { from: start + "px", to: end + "px" };
