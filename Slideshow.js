@@ -1059,7 +1059,9 @@ class Slide
 
 
     MoveText(top, left, size, _easing) {
-       
+
+        if (!this.#textHolder) return; 
+
         let el = this.#textHolder;
         el.style.position = "absolute";
                 
