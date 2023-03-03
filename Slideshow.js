@@ -278,7 +278,7 @@ class Slideshow
         };
 
        
-        let max = 400;
+        let max = 300;
         let min = 1;        
 
         let start = Math.floor(Math.random() * (max - min) + min);
