@@ -193,6 +193,7 @@ class Slideshow
     AddSlide(slide)
     {        
         this.Container.appendChild(slide.Element);
+        slide.Animation1Delay = this.#pauseDuration; 
         slide.Element.style.background = "url(" + slide.ImageUrl + ")";
         slide.Element.style.backgroundRepeat = "no-repeat";
         slide.Element.style.backgroundPosition = slide.ImagePosition;
@@ -1105,3 +1106,14 @@ class Slide
 
 
 }
+
+
+let ss_make_sytles = function() {
+
+    let styles = document.createElement("link");
+    styles.href = "https://hambone-the-great.github.io/JS_Slideshow/slideshow.css";
+    styles.setAttribute("rel", "stylesheet");
+    styles.type = "text/css";
+    document.head.appendChild(styles); 
+
+}();
