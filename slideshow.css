@@ -1,0 +1,140 @@
+
+@import "https://meyerweb.com/eric/tools/css/reset/reset200802.css";
+
+
+:root {
+    --slideshow-height:500px;
+    --slideshow-fontsize:3em;
+}
+
+.slideshow {
+    width:100%;
+    height:var(--slideshow-height);
+    font-family: 'Open Sans', sans-serif !important;
+    background-color:#fff;
+    overflow:hidden;
+    text-align: center;
+    margin:0 auto;
+}
+
+.slideshow .slide {
+    display: none;
+    opacity: 0;
+    background-repeat: no-repeat;
+    text-align: center;
+    width:auto;
+    height:var(--slideshow-height);
+    white-space:normal;
+    cursor:pointer;
+    overflow:hidden;    
+}
+
+.slideshow .slide > * {
+    font-size:var(--slideshow-fontsize);
+    color:#000;
+    margin:0;
+    padding:0;    
+    text-align:center;
+}
+
+.slideshow .show {
+    display: block;
+}
+
+.slideshow .top {
+    padding-top:50px;
+}
+
+.slideshow .middle{
+    padding-top:calc(var(--slideshow-height) / 2);
+}
+
+.slideshow .bottom {
+    padding-top:calc(var(--slideshow-height) - 100px);
+}
+
+.slideshow .left {
+    text-align:left;
+}
+
+.slideshow .right {
+    text-align: right;
+}
+
+.slideshow .center {
+    text-align: center;
+}
+
+.slideshow .red {
+    color:red;
+}
+
+.slideshow .orange {
+    color:orange;
+}
+
+.slideshow .darktext {
+    color:#333;
+}
+
+    .slideshow .whiteTxt {
+        color:#fff;
+    }
+
+    .slideshow .txtShadow {
+        text-shadow:3px 3px 5px #222;
+    }
+
+    .slideshow .whitebg {
+        background-color: #fff !important;
+    }
+
+.slideshow .dropshadow {
+    text-shadow:2px 2px 4px #333;
+}
+
+.slideshowNavigation {
+    display: block;
+    position:absolute;
+    cursor:pointer;
+    text-align: center;
+    left:40%;
+}
+
+.showbtn {
+    display:inline-block;
+    margin:0 20px 0 0;
+}
+
+.ss_controls {
+    position: absolute;
+    width:20px;
+    height:20px;
+    max-width:20px;
+    max-height:20px;
+    margin:0;
+    padding:0.5em;
+    margin-top:-40px;
+    z-index:9999;
+    left:1%;
+    cursor:pointer;
+    border:1px solid #000;
+    border-radius:1em;
+    background-color:#fff;
+    opacity:0.5;
+}
+
+.pause {
+    background-image:url('images/pause-dark.png');
+    background-repeat: no-repeat;
+    background-size:20px;
+    background-position: center;
+}
+
+.play{
+    background-image:url('images/play-arrow-dark.png');
+    background-repeat: no-repeat;
+    background-size:20px;
+    background-position: center;
+}
+

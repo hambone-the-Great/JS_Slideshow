@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <link href="slideshow.css" rel="stylesheet" type="text/css" />    
+    <script src="Slideshow.js"></script>
+
+    <style>
+
+        html, body {
+            font-family: 'Open Sans', sans-serif;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight:bold;
+            line-height:1em; 
+            margin:0.5em auto; 
+        }
+
+        h1 { font-size:3em; }
+        h2 { font-size:2.5em; }
+        h3 { font-size:2em; }
+        h4 { font-size:1.5em; }
+        h5 { font-size:1em; }
+        h6 { font-size:0.75em; }
+
+        ul {
+            list-style-position:inside;
+            list-style-type:circle;
+            margin-left:25px;
+        }
+
+        p, span, a, li {
+            font-size:1.2em;
+            line-height:1.5em;
+            margin:1em auto;
+        }
+
+        .container {
+            text-align:left;
+            margin:0.5em auto;
+            width:90%;
+        }
+
+        pre {
+            background-color:#333;
+            color:lightblue;
+            font-size:18px;
+            border-radius:8px;             
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1>Schuff Software Company's JS Slideshow</h1>
+    <p>JS Slideshow is a simple and lightweight Slideshow that uses vanilla Javascript.</p>
+    <p>Here is an example of JS Slideshow:</p>    
+    <div id="mySlideshow" class="slideshow">
+        <div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/cd/Jake-garn_29855392470_o.jpg');">
+            <span class="whiteTxt txtShadow">Lightweight, vanilla Javascript; no need for 3rd party libraries.</span>
+        </div>
+        <div class="slide middle" style="background-image: url('https://media.tenor.com/YGWwTOTIO4EAAAAC/friends.gif');">
+            <span class="whiteTxt txtShadow">Animated Gifs!</span>
+        </div>
+        <div class="slide top" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/14/Spacewalker.jpg')">
+            <span class="whiteTxt txtShadow">Slides can include text, images, video, and embedded resources.</span>
+        </div>
+        <div class="slide bottom" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/%22Pink%22_Full_Moon_and_Partial_Lunar_Eclipse_on_April_25%2C_2013_%288680887537%29.jpg');">
+            <span class="whiteTxt txtShadow">Text and images can be animated too!</span>
+        </div>        
+        <div class="slide middle">
+            <span class="whiteTxt txtShadow">Embeded Resoureces!</span>
+            <iframe width="560" height="500" src="https://www.youtube.com/embed/GFgJgGV4d28" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="slide top">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/A_Close_Look_At_Pluto_%2824965827610%29.jpg" />
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <p>
+            View this project on <a href="https://github.com/hambone-the-Great/JS_Slideshow/tree/Live">GitHub</a>.
+        </p>
+
+    </div>
+<div class="container">
+
+    <h3>Features:</h3>
+    <ul>
+        <li>Slides can include text, images, video, and embedded resources.</li>
+        <li>Lightweight, vanilla Javascript; no need for 3rd party libraries.</li>
+        <li>Compatible with all modern browsers, including mobile.</li>
+        <li>Multiple animation options available for each individual slide.</li>
+        <li>Text can be animated too!</li>
+        <li>Works with all image types, including animated gifs!</li>
+        <li>It also should work with video files such as MP4s</li>
+        <li>Flexible and easy to use!</li>
+        <li>It's free and open source!</li>
+        <li>It's hosted on GitHub: <a href="https://github.com/hambone-the-Great/JS_Slideshow/tree/Live">https://github.com/hambone-the-Great/JS_Slideshow/tree/Live</a></li>
+    </ul>
+
+
+<h3>Here is a code example:</h3>
+<pre>        
+
+    &lt;!-- Make sure you include a reference to the JS Slideshow classes. --&gt;
+    &lt;script src="https://hambone-the-great.github.io/JS_Slideshow/Slideshow.js"&gt;&lt;/script&gt;
+    
+    &lt;!-- You can also use our pre-defined CSS styles if you wish! --&gt;
+    &lt;link href="slideshow.css" rel="stylesheet" type="text/css" /&gt;  
+    
+    &lt;!-- A simple div with your desired id is the container for the slideshow. --&gt;
+    &lt;div id="mySlideshow" class="slideshow"&gt;
+        &lt;div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/d6/Half_Dome_from_Glacier_Point%2C_Yosemite_NP_-_Diliff.jpg');"&gt;
+        &lt;span class="whiteTxt txtShadow"&gt;Lightweight, vanilla Javascript; no need for 3rd party libraries.&lt;/span&gt;
+                &lt;/div&gt;
+        &lt;div class="slide" style="background-image: url('https://media.tenor.com/YGWwTOTIO4EAAAAC/friends.gif');"&gt;
+        &lt;span class="whiteTxt txtShadow"&gt;Animated Gifs!&lt;/span&gt;
+                &lt;/div&gt;
+        &lt;div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/58/Assignment-_48-DPA-08-07_SOI_K_NP_WYHighlights_Josh%29_Highlights_from_visit_of_Secretary_Dirk_Kempthorne%2C_%28wife_Patricia%2C_and_Secretary%27s_aides%29_to_Grand_Teton_National_Park_and_Yell_-_DPLA_-_38e30cedf8a65f92e0698091cf504399.JPG')"&gt;
+        &lt;span class="whiteTxt txtShadow"&gt;Slides can include text, images, video, and embedded resources.&lt;/span&gt;
+                &lt;/div&gt;
+        &lt;div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/ab/Bison_Theodore_Roosevelt_NP_ND3.jpg');"&gt;
+        &lt;span class="whiteTxt txtShadow"&gt;Text and images can be animated too!&lt;/span&gt;
+                &lt;/div&gt;        
+        &lt;div class="slide"&gt;
+        &lt;span class="whiteTxt txtShadow"&gt;Embeded Resoureces!&lt;/span&gt;
+        &lt;iframe width="560" height="500" src="https://www.youtube.com/embed/GFgJgGV4d28" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen&gt;&lt;/iframe&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+
+
+        //Initiate the Slideshow. 
+        let slideshow = new Slideshow("mySlideshow");
+
+        slideshow.BackgroundColor = "#333";
+        slideshow.ShowControls = true;
+        slideshow.AnimationType = "Loop";
+
+        //start the slideshow. 
+        slideshow.Start();  
+
+      
+    &lt;/script&gt;
+
+</pre>
+</div>
+
+
+
+
+
+    <div class="container">
+        <p>Copyright (c) 2023 Marcus Schuff (aka Hambone The Great) dba Schuff Software Company</p>
+
+        <p>
+            Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:
+        </p>
+        <p>
+            The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.
+        </p>
+        <p>
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.
+        </p>
+    </div>
+
+    <script>
+
+
+        let slideshow = new Slideshow("mySlideshow");
+        slideshow.BackgroundColor = "#333";
+        slideshow.ShowControls = true;
+        slideshow.AnimationType = "Loop";        
+
+        slideshow.Start();
+
+
+    </script>
+
+</body>
+</html>
+
