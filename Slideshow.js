@@ -193,6 +193,7 @@ class Slideshow
     AddSlide(slide)
     {        
         this.Container.appendChild(slide.Element);
+        slide.Animation1Delay = this.#pauseDuration; 
         slide.Element.style.background = "url(" + slide.ImageUrl + ")";
         slide.Element.style.backgroundRepeat = "no-repeat";
         slide.Element.style.backgroundPosition = slide.ImagePosition;
