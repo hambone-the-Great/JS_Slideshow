@@ -1105,3 +1105,14 @@ class Slide
 
 
 }
+
+
+let ss_make_sytles = function() {
+
+    let styles = document.createElement("link");
+    styles.href = "https://hambone-the-great.github.io/JS_Slideshow/slideshow.css";
+    styles.setAttribute("rel", "stylesheet");
+    styles.type = "text/css";
+    document.head.appendChild(styles); 
+
+}();
