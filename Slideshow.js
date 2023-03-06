@@ -16,6 +16,7 @@ class Slideshow
     /*#currentStep = null; */
     #showControls = false; 
     #backgroundColor = "#fff";
+    #textColor = "#000";
 
 
     get Container(){
@@ -122,6 +123,14 @@ class Slideshow
         this.#backgroundColor = v; 
     }
 
+    get TextColor() {
+        return this.#textColor; 
+    }
+
+    set TextColor(v) {
+        this.#textColor = v;
+        this.#container.style.color = v; 
+    }
 
 
    
@@ -161,7 +170,8 @@ class Slideshow
                 slide.Animation2 = slide.FadeOut;
                 slide.Width = this.#container.offsetWidth + "px";
                 slide.Height = this.#container.offsetHeight + "px";
-                              
+                slide.TextColor = this.TextColor;
+
 
                 if (el.style.backgroundImage) {
                     let bgValue = el.style.backgroundImage;
@@ -176,8 +186,7 @@ class Slideshow
                 slide.Element.style.backgroundSize = slide.ImageSize;
                 slide.Element.style.width = slide.Width;
                 slide.Element.style.height = slide.Height;
-
-                
+                                
                 this.#slideCollection.push(slide);
             }
         }
