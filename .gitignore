@@ -1,2 +1,9 @@
+*.gif
 *.sqlite
+*.suo
+*.user
+
+
 .vs/
+.vscode/
+
