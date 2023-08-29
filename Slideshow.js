@@ -1,6 +1,10 @@
  /**
  * A cool class for creating a slideshow. 
  */
+
+//This is a test from my Samsung Tablet. 
+//I need to find a VS Code type editor for Android. 
+
 class Slideshow 
 {       
     #container = null
