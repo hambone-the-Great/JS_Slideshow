@@ -11,7 +11,7 @@ class Slideshow
     #container = null;
     //The slideElementes is an array containing the slideshow slides
     #slideElements = null; 
-    
+    //The starting slide object. 
     #startingSlide = 0; 
     #animationDuration = 15;
     #pauseDuration = 5000;
