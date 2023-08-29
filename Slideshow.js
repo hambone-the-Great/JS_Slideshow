@@ -13,9 +13,13 @@ class Slideshow
     #slideElements = null; 
     //The starting slide object. 
     #startingSlide = 0; 
+    //The duration of the animation of each slide. 
     #animationDuration = 15;
+    //The duration of time each slide is displayed. 
     #pauseDuration = 5000;
+    //Animation type is the type of animation between each slide. 
     #animationType = "fade"; 
+    
     #moveImages = true;
     #slideCollection = [];
     #cancel = false; 
