@@ -9,7 +9,7 @@ class Slideshow
 {       
     //The container is the HTML Element that contains the slideshow.
     #container = null;
-    //The slideElementes is an array containing the slideshow slides
+    //The slideElementes is an object containing all of the slides. 
     #slideElements = null; 
     //The starting slide object. 
     #startingSlide = 0; 
@@ -19,14 +19,20 @@ class Slideshow
     #pauseDuration = 5000;
     //Animation type is the type of animation between each slide. 
     #animationType = "fade"; 
-    
+    //Whether to move the position of the image during the display of the slide. 
     #moveImages = true;
+    //An array holding all of the slides. 
     #slideCollection = [];
+    //The Cancel status of the class. 
     #cancel = false; 
+    //The index of teh current slide. 
     #currentSlideIndex = null; 
     /*#currentStep = null; */
+    //Bool determing whether to show the slideshow controls or not. 
     #showControls = false; 
+    //The background color of the slideshow
     #backgroundColor = "#fff";
+    //The color of any text over the slide.
     #textColor = "#000";
 
 
